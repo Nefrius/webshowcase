@@ -259,7 +259,6 @@ function PersonalAnalytics({ data }: { data: UserAnalytics }) {
 
 // Platform Analytics Component
 function PlatformAnalytics({ data }: { data: AnalyticsData }) {
-  const { t } = useLanguage();
   
   return (
     <motion.div

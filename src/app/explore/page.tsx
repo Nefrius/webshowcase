@@ -73,7 +73,7 @@ export default function ExplorePage() {
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [searchTerm, selectedCategory, sortBy, t]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {

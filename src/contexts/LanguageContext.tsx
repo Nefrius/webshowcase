@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Supported languages
-type Language = "en" | "tr";
+export type Language = "en" | "tr";
 
 // Language context type
 interface LanguageContextType {
@@ -18,13 +18,18 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // Translation type
 interface Translations {
-  [key: string]: any;
+  [key: string]: string | Translations;
 }
 
-// Helper function to get nested values from object
-const getNestedValue = (obj: any, path: string): string | undefined => {
-  return path.split('.').reduce((current, key) => current?.[key], obj);
-};
+  // Helper function to get nested values from object
+  const getNestedValue = (obj: Translations, path: string): string | undefined => {
+    return path.split('.').reduce((current: Translations | string | undefined, key) => {
+      if (typeof current === 'object' && current !== null) {
+        return current[key];
+      }
+      return undefined;
+    }, obj) as string | undefined;
+  };
 
 // Language provider component
 export function LanguageProvider({ children }: { children: React.ReactNode }) {

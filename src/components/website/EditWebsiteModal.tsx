@@ -20,18 +20,7 @@ import { Website, WebsiteCategory, Technology, WebsitePurpose } from "@/types/we
 import { updateWebsite } from "@/lib/firestore";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const categoryLabels = {
-  [WebsiteCategory.ECOMMERCE]: "E-ticaret",
-  [WebsiteCategory.PORTFOLIO]: "Portfolio", 
-  [WebsiteCategory.BLOG]: "Blog",
-  [WebsiteCategory.CORPORATE]: "Kurumsal",
-  [WebsiteCategory.LANDING]: "Landing Page",
-  [WebsiteCategory.DASHBOARD]: "Dashboard",
-  [WebsiteCategory.SOCIAL]: "Sosyal Medya",
-  [WebsiteCategory.EDUCATIONAL]: "Eğitim",
-  [WebsiteCategory.NEWS]: "Haber",
-  [WebsiteCategory.OTHER]: "Diğer"
-};
+
 
 const technologyLabels = {
   [Technology.REACT]: "React",
