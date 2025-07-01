@@ -1,0 +1,273 @@
+{
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "users": "Users",
+    "about": "About",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "myWebsites": "My Websites",
+    "addWebsite": "Add Website",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "common": {
+    "visit": "Visit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "edit": "Edit",
+    "website": "Website",
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back to Home",
+    "views": "views",
+    "likes": "likes",
+    "websites": "websites",
+    "delete": "Delete",
+    "confirm": "Are you sure?",
+    "confirmDelete": "Are you sure you want to delete this item? This action cannot be undone."
+  },
+  "home": {
+    "heroBadge": "Modern Website Showcase Platform",
+    "heroTitle": "Website Showcase Platform",
+    "heroSubtitle": "Discover amazing websites, get inspired, and share your own creations with the community.",
+    "exploreWebsites": "Explore Websites",
+    "addWebsite": "Add Website",
+    "joinFree": "Join Free",
+    "loading": "Loading...",
+    "viewAllWebsites": "View All Websites",
+    "noWebsites": "No websites yet",
+    "addFirstWebsite": "Add First Website",
+    "stats": {
+      "totalWebsites": "Total Websites",
+      "totalLikes": "Total Likes",
+      "totalViews": "Total Views"
+    },
+    "featuredSection": {
+      "title": "Featured Websites",
+      "subtitle": "Discover the most popular and recently added websites in our community"
+    },
+    "features": {
+      "title": "Why Choose Infery?",
+      "subtitle": "Modern features for sharing and discovering amazing websites",
+      "easySharing": {
+        "title": "Easy Sharing",
+        "description": "Share your websites easily and get feedback from the community"
+      },
+      "realTimeData": {
+        "title": "Real-time Analytics",
+        "description": "Track views, likes and engagement on your websites"
+      },
+      "modernTech": {
+        "title": "Modern Technology",
+        "description": "Built with the latest web technologies for the best experience"
+      }
+    }
+  },
+  "explore": {
+    "title": "Explore Websites",
+    "subtitle": "Discover amazing websites created by our community",
+    "searchPlaceholder": "Search websites, creators...",
+    "allCategories": "All Categories",
+    "categories": {
+      "ecommerce": "E-commerce",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "corporate": "Corporate",
+      "landing": "Landing Page",
+      "dashboard": "Dashboard",
+      "social": "Social Media",
+      "educational": "Educational",
+      "news": "News",
+      "other": "Other"
+    },
+    "sortBy": "Sort By",
+    "newest": "Newest",
+    "popular": "Most Popular",
+    "mostViewed": "Most Viewed",
+    "websitesFound": "websites found",
+    "loadingFromFirestore": "Loading websites...",
+    "refresh": "Refresh",
+    "errorLoading": "Error loading websites",
+    "tryAgain": "Try Again"
+  },
+  "submit": {
+    "title": "Add New Website",
+    "subtitle": "Share your amazing website with the community",
+    "websiteTitle": "Website Title",
+    "websiteUrl": "Website URL",
+    "description": "Description",
+    "category": "Category",
+    "purpose": "Purpose",
+    "technologies": "Technologies",
+    "submit": "Submit Website",
+    "submitting": "Submitting...",
+    "success": "Your website has been successfully submitted and is now live!",
+    "purposes": {
+      "personal": "Personal",
+      "business": "Business",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "ecommerce": "E-commerce",
+      "education": "Education",
+      "nonprofit": "Non-profit",
+      "other": "Other"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Track your website performance and platform statistics",
+    "personalStats": "Personal Statistics",
+    "platformStats": "Platform Statistics",
+    "totalWebsites": "Total Websites",
+    "totalViews": "Total Views", 
+    "totalLikes": "Total Likes",
+    "totalFollowers": "Total Followers",
+    "topWebsites": "Top Performing Websites",
+    "websiteCategories": "Website Categories",
+    "popularCategories": "Most Popular Categories",
+    "popularTechnologies": "Most Popular Technologies",
+    "recentActivity": "Recent Activity",
+    "noWebsites": "No websites added yet",
+    "noCategoryData": "No category data yet",
+    "noActivity": "No activity yet",
+    "thisMonth": "This month",
+    "newWebsite": "New Website",
+    "newUser": "New User",
+    "like": "Like",
+    "comment": "Comment"
+  },
+  "myWebsites": {
+    "title": "My Websites",
+    "subtitle": "Manage your websites and view statistics",
+    "addNewWebsite": "Add New Website",
+    "loadingWebsites": "Loading your websites...",
+    "noWebsites": "You haven't added any websites yet",
+    "noWebsitesDescription": "Add your first website and share it with the community",
+    "addFirstWebsite": "Add Your First Website",
+    "confirmDelete": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+    "deleteSuccess": "\"{{title}}\" has been successfully deleted.",
+    "updateSuccess": "\"{{title}}\" has been successfully updated.",
+    "deleteError": "Error occurred while deleting website. Please try again.",
+    "loadError": "Error occurred while loading your websites.",
+    "featured": "Featured",
+    "premium": "Premium",
+    "category": "Category",
+    "technologies": "Technologies",
+    "dateAdded": "Date added",
+    "totalWebsites": "Total Websites",
+    "totalViews": "Total Views",
+    "totalLikes": "Total Likes",
+    "statistics": "Statistics",
+    "moreItems": "+{{count}} more"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "loginDescription": "Enter your email to sign in to your account",
+    "registerDescription": "Create an account to get started",
+    "signInWithGoogle": "Continue with Google",
+    "signUpWithGoogle": "Sign up with Google",
+    "or": "or",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "displayName": "Full Name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loggingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "createAccount": "Create Account",
+    "termsAndPrivacy": "By signing up, you agree to our",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "premium": "Premium",
+    "errors": {
+      "loginFailed": "Login failed. Please check your credentials.",
+      "googleLoginFailed": "Google login failed. Please try again.",
+      "registerFailed": "Registration failed. Please try again.",
+      "passwordMismatch": "Passwords do not match.",
+      "passwordTooShort": "Password must be at least 6 characters.",
+      "emailInUse": "This email is already in use.",
+      "weakPassword": "Password is too weak.",
+      "invalidEmail": "Invalid email address."
+    }
+  },
+  "users": {
+    "title": "Discover Users",
+    "subtitle": "Discover community members and explore their projects",
+    "searchPlaceholder": "Search users...",
+    "newest": "Newest",
+    "mostPopular": "Most Popular",
+    "mostActive": "Most Active",
+    "foundUsers": "users found",
+    "noUsers": "No users yet",
+    "noUsersDescription": "Waiting for the first users to join",
+    "notFound": "No users found",
+    "notFoundDescription": "Try different search terms",
+    "stats": {
+      "websites": "Websites",
+      "views": "Views",
+      "likes": "Likes"
+    },
+    "profile": {
+      "joined": "Joined",
+      "anonymous": "Anonymous User",
+      "reportUser": "Report User"
+    }
+  },
+  "about": {
+    "title": "About Infery",
+    "subtitle": "A modern website showcase platform built with love from Turkey",
+    "madeTurkey": "Made in Turkey, with love",
+    "techStack": "Tech Stack",
+    "mission": "Our Mission",
+    "stats": {
+      "developmentTime": "Development Time",
+      "developmentTimeValue": "3+ Months",
+      "codeLines": "Lines of Code",
+      "codeLinesValue": "10K+",
+      "components": "Components",
+      "componentsValue": "50+",
+      "pages": "Pages",
+      "pagesValue": "15+"
+    },
+    "techCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "storage": "Storage",
+      "tools": "Tools"
+    },
+    "developer": {
+      "title": "Developer",
+      "subtitle": "This platform was created by a passionate developer",
+      "name": "Enes Baş",
+      "role": "Full Stack Web Developer",
+      "description": "Expert in modern web technologies and user experience",
+      "portfolio": "Portfolio"
+    },
+    "company": {
+      "title": "Partner Company",
+      "subtitle": "Infery is being developed in partnership with Nefrius company",
+      "name": "Nefrius",
+      "description": "A technology company that develops innovative solutions",
+      "website": "Visit Website"
+    },
+    "missionDescription": "To create a modern platform where developers can showcase their projects",
+    "cta": {
+      "title": "Join Us",
+      "description": "Share your projects with the community",
+      "addWebsite": "Add Website",
+      "exploreProjects": "Explore Projects"
+    }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "The page you are looking for does not exist"
+  }
+} 

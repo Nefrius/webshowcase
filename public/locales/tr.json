@@ -1,0 +1,273 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "explore": "Keşfet",
+    "users": "Kullanıcılar",
+    "about": "Hakkımızda",
+    "login": "Giriş Yap",
+    "register": "Üye Ol",
+    "myWebsites": "Websitelerim",
+    "addWebsite": "Website Ekle",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "profile": "Profil",
+    "logout": "Çıkış Yap"
+  },
+  "common": {
+    "visit": "Ziyaret Et",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "edit": "Düzenle",
+    "website": "Website",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "back": "Ana Sayfaya Dön",
+    "views": "görüntüleme",
+    "likes": "beğeni",
+    "websites": "website",
+    "delete": "Sil",
+    "confirm": "Emin misiniz?",
+    "confirmDelete": "Bu öğeyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+  },
+  "home": {
+    "heroBadge": "Modern Website Showcase Platformu",
+    "heroTitle": "Website Showcase Platformu",
+    "heroSubtitle": "Harika websiteleri keşfedin, ilham alın ve kendi projelerinizi toplulukla paylaşın.",
+    "exploreWebsites": "Websiteleri Keşfet",
+    "addWebsite": "Website Ekle",
+    "joinFree": "Ücretsiz Katıl",
+    "loading": "Yükleniyor...",
+    "viewAllWebsites": "Tüm Websiteleri Görüntüle",
+    "noWebsites": "Henüz website yok",
+    "addFirstWebsite": "İlk Website'i Ekle",
+    "stats": {
+      "totalWebsites": "Toplam Website",
+      "totalLikes": "Toplam Beğeni",
+      "totalViews": "Toplam Görüntüleme"
+    },
+    "featuredSection": {
+      "title": "Öne Çıkan Websiteler",
+      "subtitle": "Topluluğumuzda en popüler ve yeni eklenen websiteleri keşfedin"
+    },
+    "features": {
+      "title": "Neden Infery?",
+      "subtitle": "Harika websiteleri paylaşmak ve keşfetmek için modern özellikler",
+      "easySharing": {
+        "title": "Kolay Paylaşım",
+        "description": "Websitelerinizi kolayca paylaşın ve topluluktan geri bildirim alın"
+      },
+      "realTimeData": {
+        "title": "Gerçek Zamanlı Analitik",
+        "description": "Websitelerinizdeki görüntülenme, beğeni ve etkileşimi takip edin"
+      },
+      "modernTech": {
+        "title": "Modern Teknoloji",
+        "description": "En iyi deneyim için en son web teknolojileri ile geliştirildi"
+      }
+    }
+  },
+  "explore": {
+    "title": "Websiteleri Keşfet",
+    "subtitle": "Topluluk tarafından oluşturulan harika websiteleri keşfedin",
+    "searchPlaceholder": "Website, yaratıcı ara...",
+    "allCategories": "Tüm Kategoriler",
+    "categories": {
+      "ecommerce": "E-ticaret",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "corporate": "Kurumsal",
+      "landing": "Landing Page",
+      "dashboard": "Dashboard",
+      "social": "Sosyal Medya",
+      "educational": "Eğitim",
+      "news": "Haber",
+      "other": "Diğer"
+    },
+    "sortBy": "Sırala",
+    "newest": "En Yeni",
+    "popular": "En Popüler",
+    "mostViewed": "En Çok Görüntülenen",
+    "websitesFound": "website bulundu",
+    "loadingFromFirestore": "Websiteler yükleniyor...",
+    "refresh": "Yenile",
+    "errorLoading": "Websiteler yüklenirken hata",
+    "tryAgain": "Tekrar Dene"
+  },
+  "submit": {
+    "title": "Yeni Website Ekle",
+    "subtitle": "Harika websitenizi toplulukla paylaşın",
+    "websiteTitle": "Website Başlığı",
+    "websiteUrl": "Website URL'si",
+    "description": "Açıklama",
+    "category": "Kategori",
+    "purpose": "Amaç",
+    "technologies": "Teknolojiler",
+    "submit": "Website Gönder",
+    "submitting": "Gönderiliyor...",
+    "success": "Websiteniz başarıyla gönderildi ve artık yayında!",
+    "purposes": {
+      "personal": "Kişisel",
+      "business": "İş",
+      "portfolio": "Portfolio",
+      "blog": "Blog",
+      "ecommerce": "E-ticaret",
+      "education": "Eğitim",
+      "nonprofit": "Kar Amacı Gütmeyen",
+      "other": "Diğer"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Website performansınızı ve platform istatistiklerini takip edin",
+    "personalStats": "Kişisel İstatistikler",
+    "platformStats": "Platform İstatistikleri",
+    "totalWebsites": "Toplam Website",
+    "totalViews": "Toplam Görüntüleme",
+    "totalLikes": "Toplam Beğeni",
+    "totalFollowers": "Toplam Takipçi",
+    "topWebsites": "En İyi Performans Gösteren Websiteler",
+    "websiteCategories": "Website Kategorileri",
+    "popularCategories": "En Popüler Kategoriler",
+    "popularTechnologies": "En Popüler Teknolojiler",
+    "recentActivity": "Son Aktiviteler",
+    "noWebsites": "Henüz website eklenmemiş",
+    "noCategoryData": "Henüz kategori verisi yok",
+    "noActivity": "Henüz aktivite yok",
+    "thisMonth": "Bu ay",
+    "newWebsite": "Yeni Website",
+    "newUser": "Yeni Üye",
+    "like": "Beğeni",
+    "comment": "Yorum"
+  },
+  "myWebsites": {
+    "title": "Websitelerim",
+    "subtitle": "Eklediğiniz websiteleri yönetin ve istatistiklerini görün",
+    "addNewWebsite": "Yeni Website Ekle",
+    "loadingWebsites": "Websiteleriniz yükleniyor...",
+    "noWebsites": "Henüz website eklememişsiniz",
+    "noWebsitesDescription": "İlk websitenizi ekleyin ve toplulukla paylaşın",
+    "addFirstWebsite": "İlk Website'inizi Ekleyin",
+    "confirmDelete": "\"{{title}}\" websitesini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "deleteSuccess": "\"{{title}}\" başarıyla silindi.",
+    "updateSuccess": "\"{{title}}\" başarıyla güncellendi.",
+    "deleteError": "Website silinirken hata oluştu. Lütfen tekrar deneyin.",
+    "loadError": "Websiteleriniz yüklenirken hata oluştu.",
+    "featured": "Öne Çıkan",
+    "premium": "Premium",
+    "category": "Kategori",
+    "technologies": "Teknolojiler",
+    "dateAdded": "Eklenme tarihi",
+    "totalWebsites": "Toplam Website",
+    "totalViews": "Toplam Görüntüleme",
+    "totalLikes": "Toplam Beğeni",
+    "statistics": "İstatistikler",
+    "moreItems": "+{{count}} daha"
+  },
+  "auth": {
+    "signIn": "Giriş Yap",
+    "signUp": "Üye Ol",
+    "loginDescription": "Hesabınıza giriş yapmak için e-postanızı girin",
+    "registerDescription": "Başlamak için bir hesap oluşturun",
+    "signInWithGoogle": "Google ile Devam Et",
+    "signUpWithGoogle": "Google ile Üye Ol",
+    "or": "veya",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifre Onayı",
+    "displayName": "Ad Soyad",
+    "forgotPassword": "Şifremi unuttum?",
+    "noAccount": "Hesabınız yok mu?",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "loggingIn": "Giriş yapılıyor...",
+    "creatingAccount": "Hesap oluşturuluyor...",
+    "createAccount": "Hesap Oluştur",
+    "termsAndPrivacy": "Üye olarak",
+    "terms": "Hizmet Şartları",
+    "and": "ve",
+    "privacy": "Gizlilik Politikası",
+    "premium": "Premium",
+    "errors": {
+      "loginFailed": "Giriş başarısız. Lütfen bilgilerinizi kontrol edin.",
+      "googleLoginFailed": "Google girişi başarısız. Lütfen tekrar deneyin.",
+      "registerFailed": "Kayıt başarısız. Lütfen tekrar deneyin.",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "passwordTooShort": "Şifre en az 6 karakter olmalıdır.",
+      "emailInUse": "Bu e-posta adresi zaten kullanımda.",
+      "weakPassword": "Şifre çok zayıf.",
+      "invalidEmail": "Geçersiz e-posta adresi."
+    }
+  },
+  "users": {
+    "title": "Kullanıcıları Keşfet",
+    "subtitle": "Topluluk üyelerini keşfedin ve projelerini inceleyin",
+    "searchPlaceholder": "Kullanıcı ara...",
+    "newest": "En Yeni",
+    "mostPopular": "En Popüler",
+    "mostActive": "En Aktif",
+    "foundUsers": "kullanıcı bulundu",
+    "noUsers": "Henüz kullanıcı yok",
+    "noUsersDescription": "İlk kullanıcıların katılmasını bekleyin",
+    "notFound": "Kullanıcı bulunamadı",
+    "notFoundDescription": "Farklı arama terimleri deneyin",
+    "stats": {
+      "websites": "Website",
+      "views": "Görüntüleme",
+      "likes": "Beğeni"
+    },
+    "profile": {
+      "joined": "Katıldı",
+      "anonymous": "Anonim Kullanıcı",
+      "reportUser": "Kullanıcıyı Bildir"
+    }
+  },
+  "about": {
+    "title": "Infery Hakkında",
+    "subtitle": "Türkiye'den modern bir website showcase platformu",
+    "madeTurkey": "Türkiye'den, sevgiyle yapıldı",
+    "techStack": "Teknoloji Yığını",
+    "mission": "Misyonumuz",
+    "stats": {
+      "developmentTime": "Geliştirme Süresi",
+      "developmentTimeValue": "3+ Ay",
+      "codeLines": "Kod Satırı",
+      "codeLinesValue": "10K+",
+      "components": "Bileşen Sayısı",
+      "componentsValue": "50+",
+      "pages": "Sayfa Sayısı",
+      "pagesValue": "15+"
+    },
+    "techCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "storage": "Storage",
+      "tools": "Tools"
+    },
+    "developer": {
+      "title": "Geliştirici",
+      "subtitle": "Bu platform tutkulu bir geliştirici tarafından oluşturuldu",
+      "name": "Enes Baş",
+      "role": "Full Stack Web Developer",
+      "description": "Modern web teknolojileri konusunda uzman",
+      "portfolio": "Portfolio"
+    },
+    "company": {
+      "title": "Ortak Şirket",
+      "subtitle": "Infery, Nefrius şirketi ile ortaklık halinde geliştirilmektedir",
+      "name": "Nefrius",
+      "description": "Modern teknolojiler ile çözümler geliştiren şirket",
+      "website": "Website'i Ziyaret Et"
+    },
+    "missionDescription": "Geliştiricilerin projelerini sergileyebileceği modern platform",
+    "cta": {
+      "title": "Bize Katılın",
+      "description": "Projelerinizi toplulukla paylaşın",
+      "addWebsite": "Website Ekle",
+      "exploreProjects": "Projeleri Keşfet"
+    }
+  },
+  "notFound": {
+    "title": "Sayfa Bulunamadı",
+    "subtitle": "Aradığınız sayfa mevcut değil"
+  }
+} 
