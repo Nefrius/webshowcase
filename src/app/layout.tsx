@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Analytics } from "@vercel/analytics/next";
 import Navbar from "@/components/layout/navbar";
 import "./globals.css";
 
@@ -113,6 +114,7 @@ export default function RootLayout({
             <Toaster position="top-right" />
           </AuthProvider>
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
