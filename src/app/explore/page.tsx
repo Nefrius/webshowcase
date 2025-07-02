@@ -2,15 +2,16 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
+import { Search, Grid, List } from "lucide-react";
+import Script from "next/script";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Search, Grid, List } from "lucide-react";
-import WebsiteGrid from "@/components/website/WebsiteGrid";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Website, WebsiteCategory } from "@/types/website";
 import { getWebsites } from "@/lib/firestore";
-import { useLanguage } from "@/contexts/LanguageContext";
+import WebsiteGrid from "@/components/website/WebsiteGrid";
 
 export default function ExplorePage() {
   const [websites, setWebsites] = useState<Website[]>([]);
@@ -82,6 +83,38 @@ export default function ExplorePage() {
 
     return () => clearTimeout(debounceTimer);
   }, [searchTerm, selectedCategory, sortBy, loadWebsites]);
+
+  // Load ads after component mount
+  useEffect(() => {
+    const loadAds = () => {
+      setTimeout(() => {
+        // Top banner ad
+        const topBanner = document.getElementById('explore-top-banner');
+        if (topBanner && !topBanner.querySelector('iframe')) {
+          const script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.innerHTML = `
+            (function() {
+              var atOptions = {
+                'key' : 'f32a08da637befc6c1a3a48383dce29d',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+              var s = document.createElement('script');
+              s.type = 'text/javascript';
+              s.src = '//www.highperformanceformat.com/f32a08da637befc6c1a3a48383dce29d/invoke.js';
+              document.getElementById('explore-top-banner').appendChild(s);
+            })();
+          `;
+          topBanner.appendChild(script);
+        }
+      }, 2000);
+    };
+
+    loadAds();
+  }, []);
 
   // Handle like updates from WebsiteCard
   const handleLikeUpdate = (websiteId: string, newLikes: number) => {
@@ -251,6 +284,36 @@ export default function ExplorePage() {
             onLikeUpdate={handleLikeUpdate}
           />
         </motion.div>
+
+        {/* Native Advertisement */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <div className="flex justify-center">
+            <div className="text-center mb-4">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                Sponsorlu İçerik
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-center">
+            {/* Native Banner */}
+            <Script 
+              async
+              data-cfasync="false" 
+              src="//pl27063604.profitableratecpm.com/721b6a7c49eddfe9c53e104016d29447/invoke.js"
+            />
+            <div 
+              id="container-721b6a7c49eddfe9c53e104016d29447"
+              className="w-full max-w-[728px] rounded-lg"
+            />
+          </div>
+        </motion.div>
+
+
       </div>
     </div>
   );

@@ -53,6 +53,18 @@
     "features": {
       "title": "Neden Infery?",
       "subtitle": "Harika websiteleri paylaşmak ve keşfetmek için modern özellikler",
+      "fast": {
+        "title": "Hızlı ve Modern",
+        "description": "En hızlı ve modern teknolojilerle geliştirilmiş platform"
+      },
+      "analytics": {
+        "title": "Gerçek Zamanlı Analitik",
+        "description": "Websitelerinizdeki görüntülenme, beğeni ve etkileşimi takip edin"
+      },
+      "easy": {
+        "title": "Kolay Kullanım",
+        "description": "Websitelerinizi kolayca paylaşın ve topluluktan geri bildirim alın"
+      },
       "easySharing": {
         "title": "Kolay Paylaşım",
         "description": "Websitelerinizi kolayca paylaşın ve topluluktan geri bildirim alın"
@@ -64,9 +76,13 @@
       "modernTech": {
         "title": "Modern Teknoloji",
         "description": "En iyi deneyim için en son web teknolojileri ile geliştirildi"
-      }
-    }
+          }
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Websitelerinizi yönetin ve istatistiklerinizi görüntüleyin"
+  }
+},
   "explore": {
     "title": "Websiteleri Keşfet",
     "subtitle": "Topluluk tarafından oluşturulan harika websiteleri keşfedin",

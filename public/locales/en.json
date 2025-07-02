@@ -53,6 +53,18 @@
     "features": {
       "title": "Why Choose Infery?",
       "subtitle": "Modern features for sharing and discovering amazing websites",
+      "fast": {
+        "title": "Fast and Modern",
+        "description": "Built with the fastest and most modern technologies"
+      },
+      "analytics": {
+        "title": "Real-time Analytics",
+        "description": "Track views, likes and engagement on your websites"
+      },
+      "easy": {
+        "title": "Easy to Use",
+        "description": "Share your websites easily and get feedback from the community"
+      },
       "easySharing": {
         "title": "Easy Sharing",
         "description": "Share your websites easily and get feedback from the community"
@@ -64,9 +76,13 @@
       "modernTech": {
         "title": "Modern Technology",
         "description": "Built with the latest web technologies for the best experience"
-      }
-    }
+          }
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Manage your websites and view your statistics"
+  }
+},
   "explore": {
     "title": "Explore Websites",
     "subtitle": "Discover amazing websites created by our community",
