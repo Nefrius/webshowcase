@@ -203,10 +203,10 @@ export default function ProfilePage() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span className="font-medium">Email:</span>
+                    <span className="font-medium">Hesap:</span>
                   </div>
                   <p className="text-sm text-muted-foreground pl-6">
-                    {user.email}
+                    Gizli (Güvenlik)
                   </p>
                 </div>
 

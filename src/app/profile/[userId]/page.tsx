@@ -212,20 +212,20 @@ export default function PublicProfilePage({ params }: PageParams) {
                   <Avatar className="h-24 w-24">
                     <AvatarImage src={user.photoURL || ''} />
                     <AvatarFallback className="text-2xl">
-                      {user.displayName?.charAt(0) || user.email.charAt(0)}
+                      {user.displayName?.charAt(0) || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <CardTitle className="text-2xl">
-                        {user.displayName || 'Anonim Kullanıcı'}
+                        {user.displayName ? user.displayName.split(' ')[0] : 'Anonim Kullanıcı'}
                       </CardTitle>
                       {user.isPremium && (
                         <Star className="h-6 w-6 text-yellow-500 fill-current" />
                       )}
                     </div>
                     <CardDescription className="text-base">
-                      {user.email}
+                      Kullanıcı
                     </CardDescription>
                     {user.isPremium && (
                       <Badge className="mt-2 bg-gradient-to-r from-amber-500 to-yellow-600">
@@ -319,7 +319,7 @@ export default function PublicProfilePage({ params }: PageParams) {
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">
-              {user.displayName || 'Kullanıcının'} Websiteleri ({websites.length})
+              {user.displayName ? user.displayName.split(' ')[0] : 'Kullanıcının'} Websiteleri ({websites.length})
             </h2>
           </div>
 

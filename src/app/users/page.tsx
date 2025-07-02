@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ReportModal } from "@/components/ui/report-modal";
@@ -119,7 +119,6 @@ export default function UsersPage() {
     if (searchTerm) {
       filtered = filtered.filter(user =>
         user.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.bio?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
@@ -269,21 +268,18 @@ export default function UsersPage() {
                       <Avatar className="h-16 w-16">
                         <AvatarImage src={user.photoURL || ''} />
                         <AvatarFallback className="text-lg">
-                          {user.displayName?.charAt(0) || user.email.charAt(0)}
+                          {user.displayName?.charAt(0) || 'U'}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <CardTitle className="text-lg truncate group-hover:text-primary transition-colors">
-                            {user.displayName || t('users.profile.anonymous')}
+                            {user.displayName ? user.displayName.split(' ')[0] : t('users.profile.anonymous')}
                           </CardTitle>
                           {user.isPremium && (
                             <Star className="h-4 w-4 text-yellow-500 fill-current" />
                           )}
                         </div>
-                        <CardDescription className="text-sm">
-                          {user.email}
-                        </CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -354,7 +350,7 @@ export default function UsersPage() {
                         <ReportModal
                           targetType="user"
                           targetId={user.uid}
-                          targetTitle={user.displayName || user.email}
+                          targetTitle={user.displayName ? user.displayName.split(' ')[0] : t('users.profile.anonymous')}
                         >
                           <Button 
                             variant="ghost" 

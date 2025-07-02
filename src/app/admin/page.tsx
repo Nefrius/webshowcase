@@ -20,6 +20,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { hasAdminPermissions, getAdminDashboardData, approveWebsite, rejectWebsite, reviewReport } from "@/lib/moderation";
+import { syncAllWebsiteCounts } from "@/lib/social";
 import { AdminDashboardData } from "@/types/moderation";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -30,6 +31,8 @@ export default function AdminPage() {
   const [dashboardData, setDashboardData] = useState<AdminDashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -86,6 +89,31 @@ export default function AdminPage() {
     }
   };
 
+  const handleSyncWebsiteCounts = async () => {
+    try {
+      setSyncing(true);
+      setSyncResult(null);
+      
+      const result = await syncAllWebsiteCounts();
+      
+      if (result.success) {
+        setSyncResult(`✅ ${result.processed} website başarıyla senkronize edildi!`);
+        await loadDashboardData(); // Refresh data
+      } else {
+        setSyncResult(`❌ Senkronizasyon başarısız. ${result.errors.length} hata.`);
+      }
+      
+      // Clear result after 5 seconds
+      setTimeout(() => setSyncResult(null), 5000);
+    } catch (err) {
+      console.error('Error syncing website counts:', err);
+      setSyncResult('❌ Senkronizasyon sırasında hata oluştu.');
+      setTimeout(() => setSyncResult(null), 5000);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   if (!user || !hasAdminPermissions(user)) {
     return null;
   }
@@ -136,14 +164,31 @@ export default function AdminPage() {
         >
           <Shield className="h-8 w-8 text-primary" />
           <h1 className="text-3xl font-bold">Admin Panel</h1>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={loadDashboardData}
-            className="ml-auto"
-          >
-            Yenile
-          </Button>
+          
+          {/* Sync Result Message */}
+          {syncResult && (
+            <div className="bg-background border rounded-lg px-3 py-2 text-sm">
+              {syncResult}
+            </div>
+          )}
+          
+          <div className="ml-auto flex gap-2">
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              onClick={handleSyncWebsiteCounts}
+              disabled={syncing}
+            >
+              {syncing ? '🔄 Senkronize ediliyor...' : '🔄 Sayıları Senkronize Et'}
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={loadDashboardData}
+            >
+              Yenile
+            </Button>
+          </div>
         </motion.div>
 
         {/* Stats Cards */}

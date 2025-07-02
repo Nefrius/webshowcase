@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Globe, Heart, Eye, User, ExternalLink, Star } from "lucide-react";
+import { Globe, Heart, Eye, User, ExternalLink, Star, MessageCircle } from "lucide-react";
+import { CompactStarRating } from "@/components/ui/star-rating";
 import { Website, WebsiteCategory, Technology } from "@/types/website";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -180,6 +181,7 @@ export default function WebsiteCard({ website, onLikeUpdate }: WebsiteCardProps)
                 width={400}
                 height={225}
                 className="w-full h-full object-cover"
+                priority
               />
             </div>
           ) : (
@@ -215,6 +217,16 @@ export default function WebsiteCard({ website, onLikeUpdate }: WebsiteCardProps)
                 <Heart className={`h-3 w-3 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
                 <span>{likesCount.toLocaleString()}</span>
               </div>
+              <div className="flex items-center gap-1">
+                <MessageCircle className="h-3 w-3" />
+                <span>{(website.commentCount || 0).toLocaleString()}</span>
+              </div>
+              {website.averageRating && website.totalRatings && website.totalRatings > 0 && (
+                <CompactStarRating
+                  value={website.averageRating}
+                  count={website.totalRatings}
+                />
+              )}
             </div>
 
             <div className="flex items-center gap-2">
