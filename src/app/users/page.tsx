@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ReportModal } from "@/components/ui/report-modal";
 import { Search, Users, MapPin, Globe, Calendar, Star, Eye, Heart, Flag } from "lucide-react";
+import FollowButton from "@/components/ui/FollowButton";
 import { collection, getDocs, query, orderBy, limit, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -346,7 +347,19 @@ export default function UsersPage() {
 
                     {/* Actions */}
                     {currentUser && currentUser.uid !== user.uid && (
-                      <div className="flex justify-end pt-2">
+                      <div className="flex justify-between items-center pt-2">
+                        <div 
+                          className="flex-1 mr-2"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <FollowButton
+                            targetUserId={user.uid}
+                            targetUserName={user.displayName ? user.displayName.split(' ')[0] : t('users.profile.anonymous')}
+                            size="sm"
+                            variant="outline"
+                            className="w-full"
+                          />
+                        </div>
                         <ReportModal
                           targetType="user"
                           targetId={user.uid}
@@ -358,8 +371,7 @@ export default function UsersPage() {
                             className="text-red-600 hover:bg-red-50"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <Flag className="h-4 w-4 mr-2" />
-                            {t('users.profile.reportUser')}
+                            <Flag className="h-4 w-4" />
                           </Button>
                         </ReportModal>
                       </div>

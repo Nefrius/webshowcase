@@ -13,6 +13,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { likeWebsite, checkUserLiked } from "@/lib/social";
+import BookmarkButton from "@/components/bookmark/BookmarkButton";
 
 interface WebsiteCardProps {
   website: Website;
@@ -230,6 +231,12 @@ export default function WebsiteCard({ website, onLikeUpdate }: WebsiteCardProps)
             </div>
 
             <div className="flex items-center gap-2">
+              <BookmarkButton
+                websiteId={website.id}
+                variant="bookmark"
+                size="sm"
+              />
+              
               <Button
                 size="sm"
                 variant="ghost"

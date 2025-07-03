@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -96,14 +95,6 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         
-        {/* Google AdSense */}
-        <script 
-          async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2964755747044989"
-          crossOrigin="anonymous"
-        />
-        
-
       </head>
       <body
         className="antialiased min-h-screen bg-background font-sans"
@@ -118,18 +109,6 @@ export default function RootLayout({
             <Toaster position="top-right" />
           </AuthProvider>
         </LanguageProvider>
-        
-        {/* Adsterra Popunder Script - Before closing </head> tag */}
-        <Script
-          src="//pl27063545.profitableratecpm.com/94/6e/a5/946ea5fdd1ef5c82ef316c740a868171.js"
-          strategy="beforeInteractive"
-        />
-        
-        {/* Adsterra Social Bar Script - Right above closing </body> tag */}
-        <Script
-          src="//pl27062878.profitableratecpm.com/d8/51/08/d8510899f0482d4ccdbf4e02bc7febb5.js"
-          strategy="lazyOnload"
-        />
         
         {/* Development only debug component */}
         {process.env.NODE_ENV === 'development' && <AdDebug />}

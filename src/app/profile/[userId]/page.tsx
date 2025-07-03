@@ -17,6 +17,7 @@ import {
   ExternalLink,
   User as UserIcon
 } from "lucide-react";
+import { ProfileFollowStats } from "@/components/ui/FollowStats";
 import { doc, getDoc, collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
@@ -237,7 +238,7 @@ export default function PublicProfilePage({ params }: PageParams) {
 
                 {/* Stats */}
                 <div className="flex-1">
-                  <div className="grid grid-cols-3 gap-4 text-center">
+                  <div className="grid grid-cols-5 gap-4 text-center">
                     <div>
                       <div className="text-2xl font-bold text-primary">
                         {stats.totalWebsites}
@@ -263,6 +264,14 @@ export default function PublicProfilePage({ params }: PageParams) {
                       <div className="text-sm text-muted-foreground">
                         Beğeni
                       </div>
+                    </div>
+                    <div className="col-span-2">
+                      <ProfileFollowStats
+                        userId={resolvedParams.userId}
+                        userName={user.displayName}
+                        userDisplayName={user.displayName}
+                        className="border-l pl-4"
+                      />
                     </div>
                   </div>
                 </div>

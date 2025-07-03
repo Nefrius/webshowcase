@@ -3,6 +3,7 @@
     "home": "Home",
     "explore": "Explore",
     "users": "Users",
+    "activity": "Activity",
     "about": "About",
     "login": "Sign In",
     "register": "Sign Up",
@@ -44,6 +45,7 @@
     "addWebsite": "Add Website",
     "joinFree": "Join Free",
     "loading": "Loading...",
+    "viewSite": "View Site",
     "viewAllWebsites": "View All Websites",
     "noWebsites": "No websites yet",
     "addFirstWebsite": "Add First Website",
@@ -55,6 +57,56 @@
     "featuredSection": {
       "title": "Featured Websites",
       "subtitle": "Discover the most popular and recently added websites in our community"
+    },
+    "popularCategories": {
+      "title": "Popular Categories",
+      "subtitle": "Discover the most preferred website categories"
+    },
+    "stats": {
+      "totalWebsites": "Total Websites",
+      "totalUsers": "Active Users",
+      "totalViews": "Total Views",
+      "totalLikes": "Total Likes"
+    },
+    "howItWorks": {
+      "title": "How It Works?",
+      "subtitle": "Get started with three simple steps",
+      "register": {
+        "title": "Register",
+        "description": "Join our community for free and start your discovery journey"
+      },
+      "submit": {
+        "title": "Submit",
+        "description": "Share your websites and showcase your creativity"
+      },
+      "discover": {
+        "title": "Discover",
+        "description": "Explore, like, and comment on amazing websites"
+      }
+    },
+    "testimonials": {
+      "title": "What Our Users Say",
+      "subtitle": "See what our community members think about Infery",
+      "testimonial1": {
+        "content": "Infery, projelerimi sergileyen harika bir platform! İnanılmaz geri bildirimler alıyorum.",
+        "author": "Ahmet Yılmaz",
+        "role": "Frontend Developer"
+      },
+      "testimonial2": {
+        "content": "Bu platform sayesinde birçok ilham verici website keşfettim. Çok kaliteli!",
+        "author": "Elif Kaya",
+        "role": "UI/UX Designer"
+      },
+      "testimonial3": {
+        "content": "Portfolyomu paylaştığımdan beri yeni projeler ve iş imkanları geliyor.",
+        "author": "Murat Demir",
+        "role": "Full Stack Developer"
+      }
+    },
+    "cta": {
+      "title": "Ready to Showcase Your Website?",
+      "subtitle": "Join the Infery community today and share your amazing creations",
+      "joinNow": "Join Now"
     },
     "features": {
       "title": "Why Choose Infery?",
@@ -243,6 +295,46 @@
       "reportUser": "Report User"
     }
   },
+  "follow": {
+    "follow": "Follow",
+    "following": "Following",
+    "unfollow": "Unfollow",
+    "followers": "Followers",
+    "followersCount": "{{count}} Followers",
+    "followingCount": "{{count}} Following",
+    "mutualFollow": "Mutual Follow",
+    "followBack": "Follow Back",
+    "followUser": "Follow {{name}}",
+    "unfollowUser": "Unfollow {{name}}",
+    "followSuccess": "{{name}} followed",
+    "unfollowSuccess": "{{name}} unfollowed",
+    "followError": "Could not follow",
+    "unfollowError": "Could not unfollow",
+    "cannotFollowSelf": "You cannot follow yourself",
+    "alreadyFollowing": "Already following",
+    "notFollowing": "Not following",
+    "followList": {
+      "title": "Follow List",
+      "followers": "Followers",
+      "following": "Following",
+      "searchPlaceholder": "Search users...",
+      "sortBy": "Sort by",
+      "recent": "Recent",
+      "alphabetical": "A-Z",
+      "popular": "Popular",
+      "loadMore": "Load More",
+      "noFollowers": "No followers yet",
+      "noFollowing": "Not following anyone yet",
+      "followersEmpty": "This user has no followers yet.",
+      "followingEmpty": "This user is not following anyone yet."
+    },
+    "stats": {
+      "title": "Follow Statistics",
+      "followersTitle": "Followers",
+      "followingTitle": "Following",
+      "mutualTitle": "Mutual Follow"
+    }
+  },
   "about": {
     "title": "About Infery",
     "subtitle": "A modern website showcase platform built with love from Turkey",
@@ -357,5 +449,93 @@
     "oldest": "Oldest",
     "highest": "Highest Rated",
     "lowest": "Lowest Rated"
+  },
+  "bookmarks": {
+    "save": "Save",
+    "saved": "Saved",
+    "addToCollection": "Add to Collection",
+    "addToCollectionDescription": "Which collection would you like to add this website to?",
+    "selectCollection": "Select Collection",
+    "existingCollection": "Existing Collection",
+    "newCollection": "New Collection",
+    "collectionName": "Collection Name",
+    "collectionNamePlaceholder": "e.g. Inspiring Designs",
+    "chooseCollection": "Choose collection...",
+    "favorites": "Favorites",
+    "note": "Note",
+    "notePlaceholder": "Your note about this website...",
+    "addBookmark": "Add Bookmark",
+    "addedSuccessfully": "Bookmark added successfully!",
+    "addFailed": "Failed to add bookmark",
+    "removedSuccessfully": "Bookmark removed successfully!",
+    "removeFailed": "Failed to remove bookmark",
+    "myBookmarks": "My Bookmarks",
+    "collections": "Collections",
+    "allBookmarks": "All Bookmarks",
+    "recentlyAdded": "Recently Added",
+    "noBookmarks": "You haven't added any bookmarks yet",
+    "noBookmarksDescription": "Start saving websites you like!",
+    "createCollection": "Create Collection",
+    "editCollection": "Edit Collection",
+    "deleteCollection": "Delete Collection",
+    "confirmDelete": "Are you sure you want to delete this collection?",
+    "confirmDeleteDescription": "This action cannot be undone and will delete all bookmarks in this collection.",
+    "collectionCreated": "Collection created successfully!",
+    "collectionUpdated": "Collection updated successfully!",
+    "collectionDeleted": "Collection deleted successfully!",
+    "totalBookmarks": "Total Bookmarks",
+    "totalCollections": "Total Collections",
+    "mostPopular": "Most Popular Collection"
+  },
+  "activity": {
+    "title": "Activity Feed",
+    "subtitle": "Latest activities from users you follow",
+    "noActivities": "No activities yet",
+    "noActivitiesDescription": "Start following users to see their activities!",
+    "loadMore": "Load More",
+    "refresh": "Refresh",
+    "filter": "Filter",
+    "filterBy": "Filter by",
+    "allActivities": "All Activities",
+    "followingOnly": "Following Only",
+    "sortBy": "Sort by",
+    "recent": "Recent",
+    "popular": "Popular",
+    "types": {
+      "website_submit": "submitted a new website",
+      "website_like": "liked a website",
+      "website_comment": "commented on a website",
+      "website_rating": "rated a website",
+      "user_follow": "followed a user",
+      "user_register": "joined the platform",
+      "bookmark_create": "created a bookmark",
+      "profile_update": "updated their profile"
+    },
+    "actions": {
+      "viewWebsite": "View Website",
+      "viewProfile": "View Profile",
+      "follow": "Follow",
+      "like": "Like",
+      "comment": "Comment"
+    },
+    "stats": {
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "allTime": "All Time"
+    },
+    "timeAgo": {
+      "now": "now",
+      "minute": "minute ago",
+      "minutes": "minutes ago",
+      "hour": "hour ago",
+      "hours": "hours ago",
+      "day": "day ago",
+      "days": "days ago",
+      "week": "week ago",
+      "weeks": "weeks ago",
+      "month": "month ago",
+      "months": "months ago"
+    }
   }
 } 

@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ReportModal } from "@/components/ui/report-modal";
 import CommentList from "@/components/comment/CommentList";
 import RatingList from "@/components/rating/RatingList";
+import BookmarkButton from "@/components/bookmark/BookmarkButton";
 import { 
   Globe, 
   Heart, 
@@ -399,6 +400,13 @@ export default function WebsiteDetailClient({ params }: PageParams) {
                 </CardDescription>
 
                 <div className="flex flex-wrap items-center gap-3">
+                  <BookmarkButton
+                    websiteId={website.id}
+                    variant="bookmark"
+                    size="lg"
+                    showText={true}
+                  />
+                  
                   <Button
                     onClick={handleLike}
                     disabled={isLiking}

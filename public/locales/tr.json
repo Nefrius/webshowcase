@@ -3,6 +3,7 @@
     "home": "Ana Sayfa",
     "explore": "Keşfet",
     "users": "Kullanıcılar",
+    "activity": "Aktivite",
     "about": "Hakkımızda",
     "login": "Giriş Yap",
     "register": "Üye Ol",
@@ -44,6 +45,7 @@
     "addWebsite": "Website Ekle",
     "joinFree": "Ücretsiz Katıl",
     "loading": "Yükleniyor...",
+    "viewSite": "Siteyi Gör",
     "viewAllWebsites": "Tüm Websiteleri Görüntüle",
     "noWebsites": "Henüz website yok",
     "addFirstWebsite": "İlk Website'i Ekle",
@@ -55,6 +57,56 @@
     "featuredSection": {
       "title": "Öne Çıkan Websiteler",
       "subtitle": "Topluluğumuzda en popüler ve yeni eklenen websiteleri keşfedin"
+    },
+    "popularCategories": {
+      "title": "Popüler Kategoriler",
+      "subtitle": "En çok tercih edilen website kategorilerini keşfedin"
+    },
+    "stats": {
+      "totalWebsites": "Toplam Website",
+      "totalUsers": "Aktif Kullanıcı",
+      "totalViews": "Toplam Görüntüleme",
+      "totalLikes": "Toplam Beğeni"
+    },
+    "howItWorks": {
+      "title": "Nasıl Çalışır?",
+      "subtitle": "Üç basit adımla başlayın",
+      "register": {
+        "title": "Kayıt Ol",
+        "description": "Topluluğumuza ücretsiz katılın ve keşif yolculuğunuza başlayın"
+      },
+      "submit": {
+        "title": "Gönder",
+        "description": "Websitelerinizi paylaşın ve yaratıcılığınızı sergileyın"
+      },
+      "discover": {
+        "title": "Keşfet",
+        "description": "Harika websiteleri keşfedin, beğenin ve yorum yapın"
+      }
+    },
+    "testimonials": {
+      "title": "Kullanıcılarımız Ne Diyor",
+      "subtitle": "Infery hakkında topluluk üyelerimizin düşüncelerini görün",
+      "testimonial1": {
+        "content": "Infery, projelerimi sergileyen harika bir platform! İnanılmaz geri bildirimler alıyorum.",
+        "author": "Ahmet Yılmaz",
+        "role": "Frontend Developer"
+      },
+      "testimonial2": {
+        "content": "Bu platform sayesinde birçok ilham verici website keşfettim. Çok kaliteli!",
+        "author": "Elif Kaya",
+        "role": "UI/UX Designer"
+      },
+      "testimonial3": {
+        "content": "Portfolyomu paylaştığımdan beri yeni projeler ve iş imkanları geliyor.",
+        "author": "Murat Demir",
+        "role": "Full Stack Developer"
+      }
+    },
+    "cta": {
+      "title": "Websitenizi Sergilemeye Hazır mısınız?",
+      "subtitle": "Bugün Infery topluluğuna katılın ve harika yaratımlarınızı paylaşın",
+      "joinNow": "Şimdi Katıl"
     },
     "features": {
       "title": "Neden Infery?",
@@ -175,7 +227,7 @@
     "updateSuccess": "\"{{title}}\" başarıyla güncellendi.",
     "deleteError": "Website silinirken hata oluştu. Lütfen tekrar deneyin.",
     "loadError": "Websiteleriniz yüklenirken hata oluştu.",
-    "featured": "Öne Çıkan",
+    "featured": "Öne Çıkanlar",
     "premium": "Premium",
     "category": "Kategori",
     "technologies": "Teknolojiler",
@@ -241,6 +293,46 @@
       "joined": "Katıldı",
       "anonymous": "Anonim Kullanıcı",
       "reportUser": "Kullanıcıyı Bildir"
+    }
+  },
+  "follow": {
+    "follow": "Takip Et",
+    "following": "Takip Ediliyor",
+    "unfollow": "Takibi Bırak",
+    "followers": "Takipçi",
+    "followersCount": "{{count}} Takipçi",
+    "followingCount": "{{count}} Takip",
+    "mutualFollow": "Karşılıklı Takip",
+    "followBack": "Takip Et",
+    "followUser": "{{name}} kullanıcısını takip et",
+    "unfollowUser": "{{name}} kullanıcısını takipten çıkar",
+    "followSuccess": "{{name}} takip edildi",
+    "unfollowSuccess": "{{name}} takipten çıkarıldı",
+    "followError": "Takip edilemedi",
+    "unfollowError": "Takipten çıkarılamadı",
+    "cannotFollowSelf": "Kendinizi takip edemezsiniz",
+    "alreadyFollowing": "Zaten takip ediyorsunuz",
+    "notFollowing": "Takip etmiyorsunuz",
+    "followList": {
+      "title": "Takip Listesi",
+      "followers": "Takipçiler",
+      "following": "Takip Edilenler",
+      "searchPlaceholder": "Kullanıcı ara...",
+      "sortBy": "Sırala",
+      "recent": "En Son",
+      "alphabetical": "A-Z",
+      "popular": "Popüler",
+      "loadMore": "Daha Fazla",
+      "noFollowers": "Henüz takipçi yok",
+      "noFollowing": "Henüz kimse takip edilmiyor",
+      "followersEmpty": "Bu kullanıcının henüz takipçisi yok.",
+      "followingEmpty": "Bu kullanıcı henüz kimseyi takip etmiyor."
+    },
+    "stats": {
+      "title": "Takip İstatistikleri",
+      "followersTitle": "Takipçiler",
+      "followingTitle": "Takip Edilenler",
+      "mutualTitle": "Karşılıklı Takip"
     }
   },
   "about": {
@@ -357,5 +449,93 @@
     "oldest": "En Eski", 
     "highest": "En Yüksek Puan",
     "lowest": "En Düşük Puan"
+  },
+  "bookmarks": {
+    "save": "Kaydet",
+    "saved": "Kaydedildi",
+    "addToCollection": "Koleksiyona Ekle",
+    "addToCollectionDescription": "Bu website'i hangi koleksiyona eklemek istiyorsunuz?",
+    "selectCollection": "Koleksiyon Seç",
+    "existingCollection": "Mevcut Koleksiyon",
+    "newCollection": "Yeni Koleksiyon",
+    "collectionName": "Koleksiyon Adı",
+    "collectionNamePlaceholder": "Örn: İlham Veren Tasarımlar",
+    "chooseCollection": "Koleksiyon seçin...",
+    "favorites": "Favoriler",
+    "note": "Not",
+    "notePlaceholder": "Bu website hakkında notunuz...",
+    "addBookmark": "Bookmark Ekle",
+    "addedSuccessfully": "Bookmark başarıyla eklendi!",
+    "addFailed": "Bookmark eklenirken hata oluştu",
+    "removedSuccessfully": "Bookmark başarıyla kaldırıldı!",
+    "removeFailed": "Bookmark kaldırılırken hata oluştu",
+    "myBookmarks": "Bookmark'larım",
+    "collections": "Koleksiyonlar",
+    "allBookmarks": "Tüm Bookmark'lar",
+    "recentlyAdded": "Son Eklenenler",
+    "noBookmarks": "Henüz bookmark eklememişsiniz",
+    "noBookmarksDescription": "Beğendiğiniz websiteleri kaydetmeye başlayın!",
+    "createCollection": "Koleksiyon Oluştur",
+    "editCollection": "Koleksiyonu Düzenle",
+    "deleteCollection": "Koleksiyonu Sil",
+    "confirmDelete": "Bu koleksiyonu silmek istediğinizden emin misiniz?",
+    "confirmDeleteDescription": "Bu işlem geri alınamaz ve koleksiyondaki tüm bookmark'lar silinir.",
+    "collectionCreated": "Koleksiyon başarıyla oluşturuldu!",
+    "collectionUpdated": "Koleksiyon başarıyla güncellendi!",
+    "collectionDeleted": "Koleksiyon başarıyla silindi!",
+    "totalBookmarks": "Toplam Bookmark",
+    "totalCollections": "Toplam Koleksiyon",
+    "mostPopular": "En Popüler Koleksiyon"
+  },
+  "activity": {
+    "title": "Aktivite Akışı",
+    "subtitle": "Takip ettiğiniz kullanıcıların son aktiviteleri",
+    "noActivities": "Henüz aktivite yok",
+    "noActivitiesDescription": "Kullanıcıları takip etmeye başlayın!",
+    "loadMore": "Daha Fazla Yükle",
+    "refresh": "Yenile",
+    "filter": "Filtrele",
+    "filterBy": "Filtrele",
+    "allActivities": "Tüm Aktiviteler",
+    "followingOnly": "Sadece Takip Ettiklerim",
+    "sortBy": "Sırala",
+    "recent": "En Son",
+    "popular": "En Popüler",
+    "types": {
+      "website_submit": "yeni website gönderdi",
+      "website_like": "website beğendi",
+      "website_comment": "website yorumladı",
+      "website_rating": "website değerlendirdi",
+      "user_follow": "kullanıcı takip etti",
+      "user_register": "platforma katıldı",
+      "bookmark_create": "bookmark oluşturdu",
+      "profile_update": "profilini güncelledi"
+    },
+    "actions": {
+      "viewWebsite": "Website'i Görüntüle",
+      "viewProfile": "Profili Görüntüle",
+      "follow": "Takip Et",
+      "like": "Beğen",
+      "comment": "Yorum Yap"
+    },
+    "stats": {
+      "today": "Bugün",
+      "thisWeek": "Bu Hafta",
+      "thisMonth": "Bu Ay",
+      "allTime": "Tüm Zamanlar"
+    },
+    "timeAgo": {
+      "now": "şimdi",
+      "minute": "dakika önce",
+      "minutes": "dakika önce",
+      "hour": "saat önce",
+      "hours": "saat önce",
+      "day": "gün önce",
+      "days": "gün önce",
+      "week": "hafta önce",
+      "weeks": "hafta önce",
+      "month": "ay önce",
+      "months": "ay önce"
+    }
   }
 } 
