@@ -50,8 +50,8 @@ export default function Navbar() {
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b shadow-sm"
+        isScrolled || isMobileMenuOpen
+          ? "bg-background backdrop-blur-md border-b shadow-sm"
           : "bg-transparent"
       }`}
       initial={{ y: -100 }}
@@ -265,7 +265,7 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <motion.div
-            className="md:hidden border-t"
+            className="md:hidden border-t bg-background"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
