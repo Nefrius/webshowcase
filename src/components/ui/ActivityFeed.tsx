@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Activity, ActivityFeedProps, ActivityFilters } from '@/types/activity';
 import { getActivityFeed } from '@/lib/activities';
+import { isFirebaseConfigured } from '@/lib/firebase';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -88,19 +89,57 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
       setLoadingMore(false);
       setRefreshing(false);
     }
-  }, [filters, sortBy, activities, language]);
+  }, [filters, sortBy, language]);
   
   // Load more activities
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
     if (!loadingMore && hasMore) {
-      loadActivities(true, false);
+      setLoadingMore(true);
+      
+      const currentFilters: ActivityFilters = {
+        ...filters,
+        sortBy,
+        startAfter: activities[activities.length - 1]?.createdAt
+      };
+      
+      getActivityFeed(currentFilters)
+        .then(response => {
+          setActivities(prev => [...prev, ...response.activities]);
+          setHasMore(response.hasMore);
+        })
+        .catch(err => {
+          console.error('Error loading more activities:', err);
+          setError(language === 'tr' ? 'Daha fazla aktivite yüklenemedi' : 'Failed to load more activities');
+        })
+        .finally(() => {
+          setLoadingMore(false);
+        });
     }
-  };
+  }, [loadingMore, hasMore, filters, sortBy, activities, language]);
   
   // Refresh activities
-  const refresh = () => {
-    loadActivities(false, true);
-  };
+  const refresh = useCallback(() => {
+    setRefreshing(true);
+    setError(null);
+    
+    const currentFilters: ActivityFilters = {
+      ...filters,
+      sortBy
+    };
+    
+    getActivityFeed(currentFilters)
+      .then(response => {
+        setActivities(response.activities);
+        setHasMore(response.hasMore);
+      })
+      .catch(err => {
+        console.error('Error refreshing activities:', err);
+        setError(language === 'tr' ? 'Aktiviteler yenilenemedi' : 'Failed to refresh activities');
+      })
+      .finally(() => {
+        setRefreshing(false);
+      });
+  }, [filters, sortBy, language]);
   
   // Filter activities by search term
   const filteredActivities = activities.filter(activity => {
@@ -128,18 +167,27 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
   ];
   
   // Update filters when type changes
-  const handleTypeChange = (type: string) => {
+  const handleTypeChange = useCallback((type: string) => {
     setSelectedType(type);
     setFilters(prev => ({
       ...prev,
       activityTypes: type === 'all' ? undefined : [type as 'website_submit' | 'website_like' | 'website_comment' | 'website_rating' | 'user_follow' | 'bookmark_create' | 'profile_update']
     }));
-  };
+  }, []);
   
-  // Load activities on mount and filter changes
+  // Load activities on mount
   useEffect(() => {
-    loadActivities(false);
-  }, [loadActivities]);
+    if (isFirebaseConfigured()) {
+      loadActivities(false, false);
+    }
+  }, []);
+  
+  // Reload activities when filters or sort changes
+  useEffect(() => {
+    if (activities.length > 0) { // Only reload if we have activities (not initial load)
+      loadActivities(false, false);
+    }
+  }, [filters, sortBy]);
   
   // Loading skeleton
   const renderSkeleton = () => (

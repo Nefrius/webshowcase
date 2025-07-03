@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
-import { getFirebaseDb } from '@/lib/firebase';
+import { db, isFirebaseConfigured } from '@/lib/firebase';
 
 interface ActivityStats {
   today: number;
@@ -22,7 +22,7 @@ export const useActivityStats = (userId: string | null) => {
   });
 
   useEffect(() => {
-    if (!userId) {
+    if (!userId || !isFirebaseConfigured() || !db) {
       setStats(prev => ({ ...prev, loading: false }));
       return;
     }
@@ -31,9 +31,8 @@ export const useActivityStats = (userId: string | null) => {
       try {
         setStats(prev => ({ ...prev, loading: true, error: null }));
         
-        const db = getFirebaseDb();
-        const activitiesRef = collection(db, 'activities');
-        const followsRef = collection(db, 'follows');
+        const activitiesRef = collection(db!, 'activities');
+        const followsRef = collection(db!, 'follows');
         
         // Bugünün başlangıcı
         const today = new Date();

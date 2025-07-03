@@ -7,7 +7,8 @@ import { getAnalytics, Analytics } from 'firebase/analytics';
 const hasFirebaseConfig = 
   process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
   process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID &&
-  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN;
+  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN &&
+  process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
 
 const firebaseConfig = hasFirebaseConfig ? {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -35,12 +36,18 @@ if (hasFirebaseConfig && firebaseConfig) {
     db = getFirestore(app);
     
     // Initialize Analytics (only in browser)
-    if (typeof window !== 'undefined') {
-      analytics = getAnalytics(app);
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID) {
+      try {
+        analytics = getAnalytics(app);
+      } catch (error) {
+        console.warn('Firebase Analytics initialization failed:', error);
+      }
     }
   } catch (error) {
     console.warn('Firebase initialization failed:', error);
   }
+} else {
+  console.warn('Firebase configuration is missing. Please set up environment variables.');
 }
 
 // Helper functions to check Firebase availability
@@ -66,5 +73,9 @@ export const getFirebaseAnalytics = () => {
 };
 
 // Original exports for backward compatibility
+// Export Firebase services (will be null if not configured)
 export { auth, db, analytics };
+
+// Helper function to check if Firebase is configured
+export const isFirebaseConfigured = () => hasFirebaseConfig && !!auth && !!db;
 export default app; 
