@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { UserBadge } from "@/components/ui/UserBadge";
 
 export default function ProfilePage() {
   const { user, loading } = useAuth();
@@ -217,6 +218,31 @@ export default function ProfilePage() {
                   </div>
                   <p className="text-sm text-muted-foreground pl-6">
                     {user.createdAt.toLocaleDateString('tr-TR')}
+                  </p>
+                </div>
+
+                {/* User Badge */}
+                {user.badge && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="font-medium">Rozet:</span>
+                    </div>
+                    <div className="pl-6">
+                      <UserBadge badge={user.badge} size="sm" />
+                    </div>
+                  </div>
+                )}
+
+                {/* User Role */}
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Settings className="h-4 w-4 text-muted-foreground" />
+                    <span className="font-medium">Rol:</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground pl-6">
+                    {user.role === 'admin' ? 'Yönetici' : 
+                     user.role === 'moderator' ? 'Moderatör' : 'Kullanıcı'}
                   </p>
                 </div>
               </CardContent>

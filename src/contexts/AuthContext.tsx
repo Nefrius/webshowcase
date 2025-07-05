@@ -5,6 +5,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndP
 import { auth, db } from '@/lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { User, AuthState } from '@/types/user';
+import { initializeDefaultBadges, assignBadgeToUser } from '@/lib/admin';
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
@@ -164,6 +165,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
           createdAt: new Date(),
           lastLoginAt: new Date(),
         });
+
+        try {
+          // Varsayılan badge'leri başlat
+          await initializeDefaultBadges();
+          
+          // Yeni kullanıcıya varsayılan "Üye" badge'i ata
+          await assignBadgeToUser(result.user.uid, 'member', 'system');
+        } catch (badgeError) {
+          console.error('Badge assignment error:', badgeError);
+          // Badge hatası kayıt işlemini engellemez
+        }
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Registration failed';

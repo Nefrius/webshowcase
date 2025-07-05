@@ -1,463 +1,977 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState, useEffect, useCallback } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { 
-  Shield, 
-  Clock, 
-  Flag, 
   Users, 
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  Eye,
-  Ban
-} from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
-import { hasAdminPermissions, getAdminDashboardData, approveWebsite, rejectWebsite, reviewReport } from "@/lib/moderation";
-import { syncAllWebsiteCounts } from "@/lib/social";
-import { AdminDashboardData } from "@/types/moderation";
-import { formatDistanceToNow } from "date-fns";
-import { tr } from "date-fns/locale";
+  AlertCircle, 
+  Ban, 
+  Edit, 
+  Trash2, 
+  Plus,
+  UserCheck,
+  Badge,
+  Megaphone,
+  Search
+} from 'lucide-react';
+import { 
+  getAllUsers, 
+  banUser, 
+  unbanUser, 
+  getAllBadges, 
+  createBadge, 
+  assignBadgeToUser, 
+  removeBadgeFromUser, 
+  createSystemAnnouncement, 
+  getActiveAnnouncements,
+  initializeDefaultBadges,
+  deleteBadge,
+  updateBadge,
+  deleteAnnouncement
+} from '@/lib/admin';
+import { UserManagementModal } from '@/components/ui/admin/UserManagementModal';
+import { AdminUserData, UserBadge, SystemAnnouncement, CreateBadgeData } from '@/types/user';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge as BadgeComponent } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle 
+} from '@/components/ui/dialog';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from '@/components/ui/table';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
+import { UserBadge as UserBadgeComponent } from '@/components/ui/UserBadge';
 
 export default function AdminPage() {
   const { user } = useAuth();
-  const router = useRouter();
-  const [dashboardData, setDashboardData] = useState<AdminDashboardData | null>(null);
+  const { t } = useLanguage();
+  
+  // State
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [syncing, setSyncing] = useState(false);
-  const [syncResult, setSyncResult] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [users, setUsers] = useState<AdminUserData[]>([]);
+  const [badges, setBadges] = useState<UserBadge[]>([]);
+  const [announcements, setAnnouncements] = useState<SystemAnnouncement[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUser, setSelectedUser] = useState<AdminUserData | null>(null);
+  const [selectedBadge, setSelectedBadge] = useState<UserBadge | null>(null);
+  
+  // Modals
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false);
+  const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
+  
+  // Admin permission check
+  const hasAdminAccess = user && (user.role === 'admin' || user.role === 'moderator');
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
-    if (!hasAdminPermissions(user)) {
-      router.push('/');
-      return;
-    }
-
-    loadDashboardData();
-  }, [user, router]);
-
-  const loadDashboardData = async () => {
+  const initializeAdminData = useCallback(async () => {
     try {
       setLoading(true);
-      setError(null);
-      const data = await getAdminDashboardData();
-      setDashboardData(data);
-    } catch (err) {
-      console.error('Error loading admin dashboard:', err);
-      setError('Dashboard verileri yüklenirken hata oluştu');
+      await initializeDefaultBadges();
+      await Promise.all([
+        loadUsers(),
+        loadBadges(),
+        loadAnnouncements()
+      ]);
+    } catch (error) {
+      console.error('Error initializing admin data:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleApproveWebsite = async (websiteId: string) => {
+  // Initialize data
+  useEffect(() => {
+    if (hasAdminAccess) {
+      initializeAdminData();
+    }
+  }, [hasAdminAccess, initializeAdminData]);
+
+  const loadUsers = async () => {
     try {
-      await approveWebsite(websiteId, user!.uid);
-      await loadDashboardData();
-    } catch (err) {
-      console.error('Error approving website:', err);
+      const usersData = await getAllUsers();
+      setUsers(usersData);
+    } catch (error) {
+      console.error('Error loading users:', error);
     }
   };
 
-  const handleRejectWebsite = async (websiteId: string) => {
+  const loadBadges = async () => {
     try {
-      await rejectWebsite(websiteId, user!.uid, 'Admin tarafından reddedildi');
-      await loadDashboardData();
-    } catch (err) {
-      console.error('Error rejecting website:', err);
+      const badgesData = await getAllBadges();
+      setBadges(badgesData);
+    } catch (error) {
+      console.error('Error loading badges:', error);
     }
   };
 
-  const handleReviewReport = async (reportId: string, status: 'reviewed' | 'resolved' | 'dismissed') => {
+  const loadAnnouncements = async () => {
     try {
-      await reviewReport(reportId, user!.uid, status);
-      await loadDashboardData();
-    } catch (err) {
-      console.error('Error reviewing report:', err);
+      const announcementsData = await getActiveAnnouncements();
+      setAnnouncements(announcementsData);
+    } catch (error) {
+      console.error('Error loading announcements:', error);
     }
   };
 
-  const handleSyncWebsiteCounts = async () => {
+  // Filter users based on search
+  const filteredUsers = users.filter(u => 
+    u.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    u.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Statistics
+  const stats = {
+    totalUsers: users.length,
+    bannedUsers: users.filter(u => u.isBlocked).length,
+    totalBadges: badges.length,
+    activeAnnouncements: announcements.length
+  };
+
+  // Handle user actions
+  const handleBanUser = async (userId: string, reason: string) => {
     try {
-      setSyncing(true);
-      setSyncResult(null);
-      
-      const result = await syncAllWebsiteCounts();
-      
-      if (result.success) {
-        setSyncResult(`✅ ${result.processed} website başarıyla senkronize edildi!`);
-        await loadDashboardData(); // Refresh data
-      } else {
-        setSyncResult(`❌ Senkronizasyon başarısız. ${result.errors.length} hata.`);
-      }
-      
-      // Clear result after 5 seconds
-      setTimeout(() => setSyncResult(null), 5000);
-    } catch (err) {
-      console.error('Error syncing website counts:', err);
-      setSyncResult('❌ Senkronizasyon sırasında hata oluştu.');
-      setTimeout(() => setSyncResult(null), 5000);
-    } finally {
-      setSyncing(false);
+      await banUser(userId, { reason }, user!.uid);
+      await loadUsers();
+    } catch (error) {
+      console.error('Error banning user:', error);
     }
   };
 
-  if (!user || !hasAdminPermissions(user)) {
-    return null;
+  const handleUnbanUser = async (userId: string) => {
+    try {
+      await unbanUser(userId, user!.uid);
+      await loadUsers();
+    } catch (error) {
+      console.error('Error unbanning user:', error);
+    }
+  };
+
+  const handleAssignBadge = async (userId: string, badgeId: string) => {
+    try {
+      await assignBadgeToUser(userId, badgeId, user!.uid);
+      await loadUsers();
+    } catch (error) {
+      console.error('Error assigning badge:', error);
+    }
+  };
+
+  const handleRemoveBadge = async (userId: string) => {
+    try {
+      await removeBadgeFromUser(userId, user!.uid);
+      await loadUsers();
+    } catch (error) {
+      console.error('Error removing badge:', error);
+    }
+  };
+
+  // Handle badge actions
+  const handleCreateBadge = async (badgeData: CreateBadgeData) => {
+    try {
+      await createBadge(badgeData);
+      await loadBadges();
+      setIsBadgeModalOpen(false);
+    } catch (error) {
+      console.error('Error creating badge:', error);
+    }
+  };
+
+  const handleUpdateBadge = async (badgeId: string, badgeData: Partial<CreateBadgeData>) => {
+    try {
+      await updateBadge(badgeId, badgeData);
+      await loadBadges();
+      setIsBadgeModalOpen(false);
+    } catch (error) {
+      console.error('Error updating badge:', error);
+    }
+  };
+
+  const handleDeleteBadge = async (badgeId: string) => {
+    try {
+      await deleteBadge(badgeId);
+      await loadBadges();
+    } catch (error) {
+      console.error('Error deleting badge:', error);
+    }
+  };
+
+  // Handle announcements
+  const handleCreateAnnouncement = async (announcementData: {
+    title: string;
+    message: string;
+    type: 'info' | 'warning' | 'success' | 'error';
+    expiresAt?: Date;
+  }) => {
+    try {
+      await createSystemAnnouncement({
+        title: announcementData.title,
+        content: announcementData.message, // Map message to content
+        type: announcementData.type,
+        expiresAt: announcementData.expiresAt,
+        createdBy: user!.uid,
+        isActive: true
+      });
+      await loadAnnouncements();
+      setIsAnnouncementModalOpen(false);
+    } catch (error) {
+      console.error('Error creating announcement:', error);
+    }
+  };
+
+  const handleDeleteAnnouncement = async (announcementId: string) => {
+    try {
+      await deleteAnnouncement(announcementId);
+      await loadAnnouncements();
+    } catch (error) {
+      console.error('Error deleting announcement:', error);
+    }
+  };
+
+  const handleSendMessage = async (userId: string, title: string, message: string, type: 'info' | 'warning' | 'success' | 'error') => {
+    try {
+      const { createNotification } = await import('@/lib/notifications');
+      const { NotificationType } = await import('@/types/notification');
+      await createNotification({
+        recipientId: userId,
+        type: NotificationType.SYSTEM,
+        title,
+        message,
+        metadata: { type, isPersonal: true }
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+
+  if (!hasAdminAccess) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+              <AlertCircle className="h-6 w-6 text-red-600" />
+            </div>
+            <CardTitle className="text-xl font-semibold">
+              {t('admin.accessDenied')}
+            </CardTitle>
+            <CardDescription>
+              Bu sayfaya erişim yetkiniz bulunmamaktadır.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-16 py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="animate-pulse space-y-6">
-            <div className="h-8 bg-muted rounded w-1/3"></div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-24 bg-muted rounded"></div>
-              ))}
-            </div>
-            <div className="h-96 bg-muted rounded"></div>
-          </div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">{t('admin.loading')}</p>
         </div>
       </div>
     );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen pt-16 py-12 px-4">
-        <div className="container mx-auto max-w-6xl text-center">
-          <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Hata</h2>
-          <p className="text-muted-foreground mb-4">{error}</p>
-          <Button onClick={loadDashboardData}>Tekrar Dene</Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!dashboardData) {
-    return null;
   }
 
   return (
-    <div className="min-h-screen pt-16 py-12 px-4">
-      <div className="container mx-auto max-w-6xl space-y-8">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto py-8">
+        <div className="space-y-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3"
-        >
-          <Shield className="h-8 w-8 text-primary" />
-          <h1 className="text-3xl font-bold">Admin Panel</h1>
-          
-          {/* Sync Result Message */}
-          {syncResult && (
-            <div className="bg-background border rounded-lg px-3 py-2 text-sm">
-              {syncResult}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">
+                {t('admin.title')}
+              </h1>
+              <p className="text-muted-foreground mt-2">
+                {t('admin.welcome')}, {user?.displayName || user?.email}
+              </p>
             </div>
-          )}
-          
-          <div className="ml-auto flex gap-2">
+            <div className="flex items-center space-x-2 mt-4 sm:mt-0">
             <Button 
-              variant="secondary" 
-              size="sm" 
-              onClick={handleSyncWebsiteCounts}
-              disabled={syncing}
-            >
-              {syncing ? '🔄 Senkronize ediliyor...' : '🔄 Sayıları Senkronize Et'}
+                onClick={() => setIsAnnouncementModalOpen(true)}
+                className="flex items-center gap-2"
+              >
+                <Megaphone className="h-4 w-4" />
+                {t('admin.createAnnouncement')}
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={loadDashboardData}
-            >
-              Yenile
-            </Button>
+            </div>
           </div>
-        </motion.div>
 
         {/* Stats Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-4 gap-6"
-        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Bekleyen Websiteler</CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-600">
-                {dashboardData.pendingWebsites.length}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Bekleyen Raporlar</CardTitle>
-              <Flag className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-red-600">
-                {dashboardData.stats.pendingReports}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Toplam Rapor</CardTitle>
-              <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {dashboardData.stats.totalReports}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Aktif Bloklar</CardTitle>
-              <Ban className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {dashboardData.stats.activeBlocks}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Pending Websites */}
-        {dashboardData.pendingWebsites.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5" />
-                  Onay Bekleyen Websiteler ({dashboardData.pendingWebsites.length})
+                <CardTitle className="text-sm font-medium">
+                  {t('admin.totalUsers')}
                 </CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{stats.totalUsers}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {t('admin.bannedUsers')}
+                </CardTitle>
+                <Ban className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{stats.bannedUsers}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {t('admin.totalBadges')}
+                </CardTitle>
+                <Badge className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+                <div className="text-2xl font-bold">{stats.totalBadges}</div>
+            </CardContent>
+          </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  {t('admin.activeAnnouncements')}
+                </CardTitle>
+                <Megaphone className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
-              <CardContent className="space-y-4">
-                {dashboardData.pendingWebsites.slice(0, 5).map((website) => (
-                  <div key={website.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{website.title}</h4>
-                      <p className="text-sm text-muted-foreground">{website.description}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Badge variant="secondary">{website.category}</Badge>
-                        <span className="text-xs text-muted-foreground">
-                          {formatDistanceToNow(new Date(website.createdAt), { 
-                            addSuffix: true, 
-                            locale: tr 
-                          })}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button 
-                        size="sm" 
-                        onClick={() => handleApproveWebsite(website.id)}
-                        className="bg-green-600 hover:bg-green-700"
-                      >
-                        <CheckCircle className="h-4 w-4 mr-1" />
-                        Onayla
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="destructive"
-                        onClick={() => handleRejectWebsite(website.id)}
-                      >
-                        <XCircle className="h-4 w-4 mr-1" />
-                        Reddet
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.activeAnnouncements}</div>
               </CardContent>
             </Card>
-          </motion.div>
-        )}
+          </div>
 
-        {/* Recent Reports */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="overview">{t('admin.overview')}</TabsTrigger>
+              <TabsTrigger value="users">{t('admin.users')}</TabsTrigger>
+              <TabsTrigger value="badges">{t('admin.badges')}</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="overview" className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Flag className="h-5 w-5" />
-                Son Raporlar ({dashboardData.recentReports.length})
+                      <Users className="h-5 w-5" />
+                      {t('admin.recentUsers')}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {dashboardData.recentReports.slice(0, 10).map((report) => (
-                <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant={
-                        report.status === 'pending' ? 'destructive' :
-                        report.status === 'resolved' ? 'default' : 'secondary'
-                      }>
-                        {report.status}
-                      </Badge>
-                      <Badge variant="outline">{report.reason}</Badge>
-                    </div>
-                    <h4 className="font-semibold">{report.targetTitle || report.targetId}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {report.reporterName} tarafından rapor edildi
-                    </p>
-                    {report.description && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        &ldquo;{report.description}&rdquo;
-                      </p>
-                    )}
-                    <span className="text-xs text-muted-foreground">
-                      {formatDistanceToNow(report.createdAt.toDate(), { 
-                        addSuffix: true, 
-                        locale: tr 
-                      })}
+                  <CardContent>
+                    <div className="space-y-3">
+                      {users.slice(0, 5).map((user) => (
+                        <div key={user.uid} className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                              <span className="text-sm font-medium">
+                                {user.displayName?.[0] || user.email[0]}
                     </span>
                   </div>
-                  {report.status === 'pending' && (
-                    <div className="flex gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => handleReviewReport(report.id, 'resolved')}
-                      >
-                        Çözüldü
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => handleReviewReport(report.id, 'dismissed')}
-                      >
-                        Reddet
-                      </Button>
+                            <div>
+                              <p className="text-sm font-medium">{user.displayName || user.email}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {user.createdAt.toLocaleDateString()}
+                              </p>
+                            </div>
                     </div>
+                          {user.badge && (
+                            <UserBadgeComponent badge={user.badge} size="sm" />
                   )}
                 </div>
               ))}
+                    </div>
             </CardContent>
           </Card>
-        </motion.div>
 
-        {/* Flagged Users */}
-        {dashboardData.flaggedUsers.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Uyarı Almış Kullanıcılar ({dashboardData.flaggedUsers.length})
+                      <Megaphone className="h-5 w-5" />
+                      {t('admin.recentAnnouncements')}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {dashboardData.flaggedUsers.slice(0, 5).map((flaggedUser) => (
-                  <div key={flaggedUser.uid} className="flex items-center justify-between p-4 border rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarImage src={flaggedUser.photoURL || ''} />
-                        <AvatarFallback>
-                          {flaggedUser.displayName?.charAt(0) || flaggedUser.email.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h4 className="font-semibold">
-                          {flaggedUser.displayName || 'Anonim Kullanıcı'}
-                        </h4>
-                        <p className="text-sm text-muted-foreground">{flaggedUser.email}</p>
-                        <Badge variant="destructive" className="mt-1">
-                          {flaggedUser.warningCount} Uyarı
-                        </Badge>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {announcements.slice(0, 5).map((announcement) => (
+                        <div key={announcement.id} className="border rounded-lg p-3">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-sm">{announcement.title}</h4>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {announcement.content}
+                              </p>
                       </div>
-                    </div>
+                            <div className="flex items-center gap-2">
+                              <BadgeComponent variant={announcement.type === 'error' ? 'destructive' : 'default'}>
+                                {announcement.type}
+                              </BadgeComponent>
                     <Button 
+                                variant="ghost"
                       size="sm" 
-                      variant="outline"
-                      onClick={() => router.push(`/profile/${flaggedUser.uid}`)}
+                                onClick={() => handleDeleteAnnouncement(announcement.id)}
                     >
-                      <Eye className="h-4 w-4 mr-1" />
-                      Görüntüle
+                                <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
+                            </div>
+                          </div>
                   </div>
                 ))}
+                    </div>
               </CardContent>
             </Card>
-          </motion.div>
-        )}
+              </div>
+            </TabsContent>
 
-        {/* Stats Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
+            <TabsContent value="users" className="space-y-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder={t('admin.search')}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
           <Card>
             <CardHeader>
-              <CardTitle>Moderasyon İstatistikleri</CardTitle>
+                  <CardTitle>{t('admin.users')}</CardTitle>
+                  <CardDescription>
+                    {filteredUsers.length} {t('admin.usersFound')}
+                  </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">
-                    {dashboardData.stats.resolvedReports}
+                  <div className="rounded-md border">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>{t('admin.user')}</TableHead>
+                          <TableHead>{t('admin.role')}</TableHead>
+                          <TableHead>{t('admin.badge')}</TableHead>
+                          <TableHead>{t('admin.status')}</TableHead>
+                          <TableHead>{t('admin.joinDate')}</TableHead>
+                          <TableHead>{t('admin.actions')}</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredUsers.map((userData) => (
+                          <TableRow key={userData.uid}>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                  <span className="text-sm font-medium">
+                                    {userData.displayName?.[0] || userData.email[0]}
+                                  </span>
                   </div>
-                  <div className="text-sm text-muted-foreground">Çözülen Rapor</div>
+                                <div>
+                                  <p className="font-medium">{userData.displayName || userData.email}</p>
+                                  <p className="text-sm text-muted-foreground">{userData.email}</p>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-600">
-                    {dashboardData.stats.dismissedReports}
                   </div>
-                  <div className="text-sm text-muted-foreground">Reddedilen Rapor</div>
+                            </TableCell>
+                            <TableCell>
+                              <BadgeComponent variant={userData.role === 'admin' ? 'destructive' : 'secondary'}>
+                                {userData.role}
+                              </BadgeComponent>
+                            </TableCell>
+                            <TableCell>
+                              {userData.badge ? (
+                                <UserBadgeComponent badge={userData.badge} size="sm" />
+                              ) : (
+                                <span className="text-sm text-muted-foreground">No badge</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {userData.isBlocked ? (
+                                <BadgeComponent variant="destructive">
+                                  {t('admin.banned')}
+                                </BadgeComponent>
+                              ) : (
+                                <BadgeComponent variant="default">
+                                  {t('admin.active')}
+                                </BadgeComponent>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {userData.createdAt.toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => {
+                                    setSelectedUser(userData);
+                                    setIsUserModalOpen(true);
+                                  }}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                {userData.isBlocked ? (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleUnbanUser(userData.uid)}
+                                  >
+                                    <UserCheck className="h-4 w-4" />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => handleBanUser(userData.uid, 'Admin action')}
+                                  >
+                                    <Ban className="h-4 w-4" />
+                                  </Button>
+                                )}
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">
-                    {dashboardData.stats.totalActions}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </div>
-                  <div className="text-sm text-muted-foreground">Toplam Aksiyon</div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="badges" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-semibold">{t('admin.badges')}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {t('admin.badgeManagement')}
+                  </p>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600">
-                    {dashboardData.stats.spamDetected}
-                  </div>
-                  <div className="text-sm text-muted-foreground">Spam Tespit</div>
-                </div>
+                <Button
+                  onClick={() => {
+                    setSelectedBadge(null);
+                    setIsBadgeModalOpen(true);
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  {t('admin.createBadge')}
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {badges.map((badge) => (
+                  <Card key={badge.id}>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between">
+                        <UserBadgeComponent badge={badge} size="md" />
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              setSelectedBadge(badge);
+                              setIsBadgeModalOpen(true);
+                            }}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          {!badge.isDefault && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteBadge(badge.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <p className="text-sm text-muted-foreground mb-2">
+                        {badge.description}
+                      </p>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>Priority: {badge.priority}</span>
+                        {badge.isDefault && (
+                          <BadgeComponent variant="outline" className="text-xs">
+                            Default
+                          </BadgeComponent>
+                        )}
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
+
+      {/* User Management Modal */}
+      <UserManagementModal
+        user={selectedUser}
+        isOpen={isUserModalOpen}
+        onClose={() => setIsUserModalOpen(false)}
+        onSave={async () => {
+          // Save user data if needed
+        }}
+        onBan={async (userId, reason) => {
+          await handleBanUser(userId, reason);
+        }}
+        onUnban={async (userId) => {
+          await handleUnbanUser(userId);
+        }}
+        badges={badges}
+        onAssignBadge={handleAssignBadge}
+        onRemoveBadge={handleRemoveBadge}
+        onSendMessage={handleSendMessage}
+        isLoading={loading}
+      />
+
+      {/* Badge Management Modal */}
+      <BadgeManagementModal
+        badge={selectedBadge}
+        isOpen={isBadgeModalOpen}
+        onClose={() => setIsBadgeModalOpen(false)}
+        onSave={(badgeId?: string, badgeData?: Partial<CreateBadgeData>) => {
+          if (badgeId && badgeData) {
+            handleUpdateBadge(badgeId, badgeData);
+          } else if (badgeData) {
+            handleCreateBadge(badgeData as CreateBadgeData);
+          }
+        }}
+      />
+
+      {/* Announcement Modal */}
+      <AnnouncementModal
+        isOpen={isAnnouncementModalOpen}
+        onClose={() => setIsAnnouncementModalOpen(false)}
+        onSave={handleCreateAnnouncement}
+      />
     </div>
+  );
+}
+
+
+
+// Badge Management Modal Component
+function BadgeManagementModal({
+  badge,
+  isOpen,
+  onClose,
+  onSave
+}: {
+  badge: UserBadge | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (badgeId?: string, badgeData?: Partial<CreateBadgeData>) => void;
+}) {
+  const { t } = useLanguage();
+  const [formData, setFormData] = useState({
+    name: '',
+    displayName: '',
+    description: '',
+    color: 'text-gray-600',
+    bgColor: 'bg-gray-100',
+    icon: 'Badge',
+    priority: 1,
+    isDefault: false
+  });
+
+  useEffect(() => {
+    if (badge) {
+      setFormData({
+        name: badge.name || '',
+        displayName: badge.displayName || '',
+        description: badge.description || '',
+        color: badge.color || 'text-gray-600',
+        bgColor: badge.bgColor || 'bg-gray-100',
+        icon: badge.icon || 'Badge',
+        priority: badge.priority || 1,
+        isDefault: badge.isDefault || false
+      });
+    } else {
+      setFormData({
+        name: '',
+        displayName: '',
+        description: '',
+        color: 'text-gray-600',
+        bgColor: 'bg-gray-100',
+        icon: 'Badge',
+        priority: 1,
+        isDefault: false
+      });
+    }
+  }, [badge]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (badge) {
+      onSave(badge.id, formData);
+    } else {
+      onSave(undefined, formData);
+    }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>
+            {badge ? t('admin.editBadge') : t('admin.createBadge')}
+          </DialogTitle>
+        </DialogHeader>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="name">{t('admin.badgeName')}</Label>
+            <Input
+              id="name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="displayName">{t('admin.displayName')}</Label>
+            <Input
+              id="displayName"
+              value={formData.displayName}
+              onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="description">{t('admin.description')}</Label>
+            <Textarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="color">{t('admin.textColor')}</Label>
+              <Select value={formData.color} onValueChange={(value) => setFormData({ ...formData, color: value })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="text-gray-600">Gray</SelectItem>
+                  <SelectItem value="text-red-600">Red</SelectItem>
+                  <SelectItem value="text-blue-600">Blue</SelectItem>
+                  <SelectItem value="text-green-600">Green</SelectItem>
+                  <SelectItem value="text-yellow-600">Yellow</SelectItem>
+                  <SelectItem value="text-purple-600">Purple</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="bgColor">{t('admin.backgroundColor')}</Label>
+              <Select value={formData.bgColor} onValueChange={(value) => setFormData({ ...formData, bgColor: value })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bg-gray-100">Gray</SelectItem>
+                  <SelectItem value="bg-red-100">Red</SelectItem>
+                  <SelectItem value="bg-blue-100">Blue</SelectItem>
+                  <SelectItem value="bg-green-100">Green</SelectItem>
+                  <SelectItem value="bg-yellow-100">Yellow</SelectItem>
+                  <SelectItem value="bg-purple-100">Purple</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="icon">{t('admin.icon')}</Label>
+              <Select value={formData.icon} onValueChange={(value) => setFormData({ ...formData, icon: value })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Badge">Badge</SelectItem>
+                  <SelectItem value="Shield">Shield</SelectItem>
+                  <SelectItem value="Crown">Crown</SelectItem>
+                  <SelectItem value="Star">Star</SelectItem>
+                  <SelectItem value="Zap">Zap</SelectItem>
+                  <SelectItem value="Building">Building</SelectItem>
+                  <SelectItem value="User">User</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="priority">{t('admin.priority')}</Label>
+              <Input
+                id="priority"
+                type="number"
+                value={formData.priority}
+                onChange={(e) => setFormData({ ...formData, priority: parseInt(e.target.value) || 1 })}
+                min="1"
+                max="100"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="isDefault"
+              checked={formData.isDefault}
+              onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
+            />
+            <Label htmlFor="isDefault">{t('admin.isDefault')}</Label>
+          </div>
+
+          <div className="flex justify-end space-x-2">
+            <Button type="button" variant="outline" onClick={onClose}>
+              {t('admin.cancel')}
+            </Button>
+            <Button type="submit">
+              {badge ? t('admin.update') : t('admin.create')}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// Announcement Modal Component
+function AnnouncementModal({
+  isOpen,
+  onClose,
+  onSave
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (data: {
+    title: string;
+    message: string;
+    type: 'info' | 'warning' | 'success' | 'error';
+    expiresAt?: Date;
+  }) => void;
+}) {
+  const { t } = useLanguage();
+  const [formData, setFormData] = useState({
+    title: '',
+    message: '',
+    type: 'info' as 'info' | 'warning' | 'success' | 'error',
+    expiresAt: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      title: formData.title,
+      message: formData.message,
+      type: formData.type,
+      expiresAt: formData.expiresAt ? new Date(formData.expiresAt) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    });
+    setFormData({ title: '', message: '', type: 'info', expiresAt: '' });
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{t('admin.createAnnouncement')}</DialogTitle>
+          <DialogDescription>
+            Tüm kullanıcılara gönderilecek sistem duyurusu oluşturun.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="title">{t('admin.title')}</Label>
+            <Input
+              id="title"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="message">{t('admin.message')}</Label>
+            <Textarea
+              id="message"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="type">{t('admin.type')}</Label>
+            <Select value={formData.type} onValueChange={(value: 'info' | 'warning' | 'success' | 'error') => setFormData({ ...formData, type: value })}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="info">Info</SelectItem>
+                <SelectItem value="warning">Warning</SelectItem>
+                <SelectItem value="success">Success</SelectItem>
+                <SelectItem value="error">Error</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="expiresAt">{t('admin.expiresAt')}</Label>
+            <Input
+              id="expiresAt"
+              type="datetime-local"
+              value={formData.expiresAt}
+              onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
+            />
+          </div>
+
+          <div className="flex justify-end space-x-2">
+            <Button type="button" variant="outline" onClick={onClose}>
+              {t('admin.cancel')}
+            </Button>
+            <Button type="submit">
+              {t('admin.create')}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 } 

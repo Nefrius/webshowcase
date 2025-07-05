@@ -4,6 +4,7 @@ import {
   collection,
   doc,
   getDocs,
+  getDoc,
   query,
   where,
   serverTimestamp,
@@ -11,6 +12,8 @@ import {
   increment,
   Timestamp
 } from "firebase/firestore";
+import { createNotification } from './notifications';
+import { NotificationType } from '@/types/notification';
 
 // Like a website
 export const likeWebsite = async (websiteId: string, userId: string): Promise<{ success: boolean; liked: boolean }> => {
@@ -45,6 +48,34 @@ export const likeWebsite = async (websiteId: string, userId: string): Promise<{ 
       });
       
       await batch.commit();
+      
+      // Bildirim oluştur (beğeni bildirimi)
+      try {
+        // Website sahibine bildirim gönder
+        const websiteDoc = await getDoc(doc(db, 'websites', websiteId));
+        if (websiteDoc.exists()) {
+          const websiteData = websiteDoc.data();
+          const websiteOwnerId = websiteData.ownerId;
+          const websiteTitle = websiteData.title;
+          
+          // Kendi website'ini beğenme durumunda bildirim gönderme
+          if (websiteOwnerId !== userId) {
+            await createNotification({
+              type: NotificationType.LIKE,
+              title: 'Yeni Beğeni',
+              message: `"${websiteTitle}" projeniz beğenildi`,
+              recipientId: websiteOwnerId,
+              senderId: userId,
+              websiteId: websiteId,
+              websiteTitle: websiteTitle,
+              websiteImageUrl: websiteData.imageUrl
+            });
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to create like notification:', error);
+      }
+      
       return { success: true, liked: true };
     } else {
       // Remove like

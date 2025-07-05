@@ -67,7 +67,7 @@ export default function DashboardPage() {
             </p>
             <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800">
               <p className="text-black dark:text-white font-medium">
-                Hoş geldin, {user.displayName || user.email?.split('@')[0] || 'Kullanıcı'}
+                {t('dashboard.welcome', { name: user.displayName || user.email?.split('@')[0] || 'Kullanıcı' })}
               </p>
             </div>
           </motion.div>
@@ -88,7 +88,7 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                          Toplam Website
+                          {t('dashboard.totalWebsites')}
                         </p>
                         <p className="text-2xl font-bold text-black dark:text-white">
                           {userWebsites.length}
@@ -110,7 +110,7 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                          Toplam Görüntülenme
+                          {t('dashboard.totalViews')}
                         </p>
                         <p className="text-2xl font-bold text-black dark:text-white">
                           {totalViews.toLocaleString()}
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                          Toplam Beğeni
+                          {t('dashboard.totalLikes')}
                         </p>
                         <p className="text-2xl font-bold text-black dark:text-white">
                           {totalLikes.toLocaleString()}
@@ -155,12 +155,12 @@ export default function DashboardPage() {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-xl font-semibold text-black dark:text-white">
-                      Websitelerim
+                      {t('dashboard.myWebsites')}
                     </CardTitle>
                     <Button asChild className="bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 dark:text-black">
                       <Link href="/submit">
                         <Plus className="mr-2 h-4 w-4" />
-                        Yeni Ekle
+                        {t('dashboard.addNew')}
                       </Link>
                     </Button>
                   </div>
@@ -169,17 +169,17 @@ export default function DashboardPage() {
                   {loading ? (
                     <div className="text-center py-8">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white mx-auto mb-4"></div>
-                      <p className="text-gray-600 dark:text-gray-400">Yükleniyor...</p>
+                      <p className="text-gray-600 dark:text-gray-400">{t('dashboard.loading')}</p>
                     </div>
                   ) : userWebsites.length === 0 ? (
                     <div className="text-center py-8">
                       <Globe className="h-16 w-16 text-gray-400 mx-auto mb-4" />
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
-                        Henüz hiç website eklemedin.
+                        {t('dashboard.noWebsites')}
                       </p>
                       <Link href="/submit">
                         <Button className="bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 dark:text-black">
-                          İlk Websiteni Ekle
+                          {t('dashboard.addFirstWebsite')}
                         </Button>
                       </Link>
                     </div>
@@ -222,7 +222,7 @@ export default function DashboardPage() {
                               size="sm"
                               className="border-gray-300 dark:border-gray-700 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                             >
-                              Detaylar
+                              {t('dashboard.details')}
                             </Button>
                           </Link>
                         </div>
@@ -246,16 +246,16 @@ export default function DashboardPage() {
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-black dark:text-white flex items-center gap-2">
                     <BarChart3 className="h-5 w-5" />
-                    Hızlı İstatistikler
+                    {t('dashboard.quickStats')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
-                    <span className="text-gray-600 dark:text-gray-400">Ortalama Görüntülenme</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('dashboard.averageViews')}</span>
                     <span className="font-semibold text-black dark:text-white">{averageViews}</span>
                   </div>
                   <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
-                    <span className="text-gray-600 dark:text-gray-400">En Çok Beğenilen</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('dashboard.mostLiked')}</span>
                     <span className="font-semibold text-black dark:text-white">
                       {userWebsites.length > 0 
                         ? Math.max(...userWebsites.map(w => w.likes || 0))
@@ -264,7 +264,7 @@ export default function DashboardPage() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between py-2">
-                    <span className="text-gray-600 dark:text-gray-400">En Çok Görüntülenen</span>
+                    <span className="text-gray-600 dark:text-gray-400">{t('dashboard.mostViewed')}</span>
                     <span className="font-semibold text-black dark:text-white">
                       {userWebsites.length > 0 
                         ? Math.max(...userWebsites.map(w => w.views || 0))
@@ -285,26 +285,26 @@ export default function DashboardPage() {
               <Card className="border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-black dark:text-white">
-                    Hızlı Eylemler
+                    {t('dashboard.quickActions')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button asChild className="w-full justify-start bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 dark:text-black">
                     <Link href="/submit">
                       <Plus className="mr-2 h-4 w-4" />
-                      Yeni Website Ekle
+                      {t('dashboard.addNewWebsite')}
                     </Link>
                   </Button>
                   <Button variant="outline" asChild className="w-full justify-start border-gray-300 dark:border-gray-700 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
                     <Link href="/explore">
                       <Globe className="mr-2 h-4 w-4" />
-                      Keşfet
+                      {t('dashboard.explore')}
                     </Link>
                   </Button>
                   <Button variant="outline" asChild className="w-full justify-start border-gray-300 dark:border-gray-700 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
                     <Link href="/my-websites">
                       <TrendingUp className="mr-2 h-4 w-4" />
-                      Tüm Websitelerim
+                      {t('dashboard.allMyWebsites')}
                     </Link>
                   </Button>
                 </CardContent>
@@ -318,7 +318,7 @@ export default function DashboardPage() {
       <section className="mt-16 py-8 bg-gray-50/80 dark:bg-gray-900/80 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="text-xs text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">
-            Sponsorlu İçerik
+            {t('dashboard.sponsoredContent')}
           </div>
           
           {/* Native Banner Container */}

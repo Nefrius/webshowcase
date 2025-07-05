@@ -22,6 +22,8 @@ import { getFirebaseDb } from './firebase';
 import { Comment, CommentThread, CommentFilters, CommentModerationAction, CommentStats } from '@/types/comment';
 import { hasModeratorPermissions } from './moderation';
 import { User } from '@/types/user';
+import { createNotification } from './notifications';
+import { NotificationType } from '@/types/notification';
 
 const db = getFirebaseDb();
 
@@ -57,6 +59,35 @@ export async function addComment(
     await updateDoc(websiteRef, {
       commentCount: increment(1)
     });
+
+    // Bildirim oluştur (yorum bildirimi)
+    try {
+      // Website sahibine bildirim gönder
+      const websiteDoc = await getDoc(doc(db, 'websites', websiteId));
+      if (websiteDoc.exists()) {
+        const websiteData = websiteDoc.data();
+        const websiteOwnerId = websiteData.ownerId;
+        const websiteTitle = websiteData.title;
+        
+        // Kendi website'ine yorum yapma durumunda bildirim gönderme
+        if (websiteOwnerId !== userId) {
+          await createNotification({
+            type: NotificationType.COMMENT,
+            title: 'Yeni Yorum',
+            message: `"${websiteTitle}" projenize yorum yapıldı`,
+            recipientId: websiteOwnerId,
+            senderId: userId,
+            senderName: userDisplayName,
+            websiteId: websiteId,
+            websiteTitle: websiteTitle,
+            websiteImageUrl: websiteData.imageUrl,
+            commentId: docRef.id
+          });
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to create comment notification:', error);
+    }
 
     return docRef.id;
   } catch (error) {

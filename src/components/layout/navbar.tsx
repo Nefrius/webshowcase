@@ -18,12 +18,13 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, User, LogOut, Plus, Search, Home, Globe, Users, BarChart3, Shield, Info, Activity } from "lucide-react";
+import { Menu, X, User, LogOut, Plus, Search, Home, Globe, Users, BarChart3, Shield, Info } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hasAdminPermissions } from "@/lib/moderation";
 import LanguageSwitcher from "@/components/ui/language-switcher";
+import { NotificationBell } from "@/components/ui/NotificationBell";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -103,16 +104,7 @@ export default function Navbar() {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
-                {user && (
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <Link href="/activity" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50">
-                        <Activity className="w-4 h-4 mr-2" />
-                        {t('nav.activity')}
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                )}
+
 
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
@@ -173,6 +165,7 @@ export default function Navbar() {
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
+            {user && <NotificationBell />}
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -272,8 +265,9 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
           >
             <div className="py-4 space-y-2">
-              <div className="px-4 py-2">
+              <div className="px-4 py-2 flex items-center justify-between">
                 <LanguageSwitcher />
+                {user && <NotificationBell />}
               </div>
               <Link
                 href="/"

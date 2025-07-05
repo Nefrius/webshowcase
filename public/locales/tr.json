@@ -35,49 +35,74 @@
     "ratings": "değerlendirme",
     "characters": "karakter",
     "optional": "isteğe bağlı",
-    "submitting": "Gönderiliyor..."
+    "submitting": "Gönderiliyor...",
+    "yesterday": "dün",
+    "daysAgo": "{{days}} gün önce",
+    "hoursAgo": "{{hours}} saat önce",
+    "minutesAgo": "{{minutes}} dakika önce",
+    "justNow": "şimdi",
+    "advertisement": "Reklam",
+    "adSpace": "Reklam Alanı",
+    "adSpaceDescription": "Bu alan reklam içeriği için ayrılmıştır",
+    "yourAdHere": "Sizde Reklamınızı Buraya Koyabilirsiniz",
+    "contactForAdvertising": "Reklam vermek için iletişime geçin"
   },
   "home": {
-    "heroBadge": "Modern Website Showcase Platformu",
-    "heroTitle": "Website Showcase Platformu",
-    "heroSubtitle": "Harika websiteleri keşfedin, ilham alın ve kendi projelerinizi toplulukla paylaşın.",
+    "heroBadge": "Website Vitrin Platformu",
+    "heroTitle": "Website Vitrin Platformu",
+    "heroSubtitle": "Harika websiteleri keşfedin, ilham alın ve kendi yaratımlarınızı toplulukla paylaşın.",
     "exploreWebsites": "Websiteleri Keşfet",
     "addWebsite": "Website Ekle",
     "joinFree": "Ücretsiz Katıl",
     "loading": "Yükleniyor...",
     "viewSite": "Siteyi Gör",
-    "viewAllWebsites": "Tüm Websiteleri Görüntüle",
+    "viewAllWebsites": "Tüm Websiteleri Gör",
     "noWebsites": "Henüz website yok",
     "addFirstWebsite": "İlk Website'i Ekle",
-    "stats": {
-      "totalWebsites": "Toplam Website",
-      "totalLikes": "Toplam Beğeni",
-      "totalViews": "Toplam Görüntüleme"
-    },
-    "featuredSection": {
-      "title": "Öne Çıkan Websiteler",
-      "subtitle": "Topluluğumuzda en popüler ve yeni eklenen websiteleri keşfedin"
-    },
-    "popularCategories": {
-      "title": "Popüler Kategoriler",
-      "subtitle": "En çok tercih edilen website kategorilerini keşfedin"
+    "hero": {
+      "badge": "Dijital Dünyada Farkınızı Yaratın",
+      "title": "Websitelerinizi Sergileyin",
+      "subtitle": "Harika websiteleri keşfedin, ilham alın ve kendi yaratımlarınızı toplulukla paylaşın.",
+      "exploreButton": "Websiteleri Keşfet",
+      "submitButton": "Website Ekle"
     },
     "stats": {
       "totalWebsites": "Toplam Website",
       "totalUsers": "Aktif Kullanıcı",
       "totalViews": "Toplam Görüntüleme",
-      "totalLikes": "Toplam Beğeni"
+      "totalLikes": "Toplam Beğeni",
+      "websites": "Website",
+      "users": "Kullanıcı",
+      "views": "Görüntüleme",
+      "likes": "Beğeni"
+    },
+    "categories": {
+      "title": "Popüler Kategoriler",
+      "subtitle": "En çok tercih edilen website kategorilerini keşfedin"
+    },
+    "featured": {
+      "title": "Öne Çıkan Websiteler",
+      "subtitle": "Topluluğumuzda en popüler ve son eklenen websiteleri keşfedin",
+      "viewAll": "Tümünü Gör"
+    },
+    "featuredSection": {
+      "title": "Öne Çıkan Websiteler",
+      "subtitle": "Topluluğumuzda en popüler ve son eklenen websiteleri keşfedin"
+    },
+    "popularCategories": {
+      "title": "Popüler Kategoriler",
+      "subtitle": "En çok tercih edilen website kategorilerini keşfedin"
     },
     "howItWorks": {
       "title": "Nasıl Çalışır?",
       "subtitle": "Üç basit adımla başlayın",
       "register": {
         "title": "Kayıt Ol",
-        "description": "Topluluğumuza ücretsiz katılın ve keşif yolculuğunuza başlayın"
+        "description": "Ücretsiz olarak topluluğumuza katılın ve keşif yolculuğunuzu başlatın"
       },
       "submit": {
         "title": "Gönder",
-        "description": "Websitelerinizi paylaşın ve yaratıcılığınızı sergileyın"
+        "description": "Websitelerinizi paylaşın ve yaratıcılığınızı sergileyin"
       },
       "discover": {
         "title": "Keşfet",
@@ -86,41 +111,43 @@
     },
     "testimonials": {
       "title": "Kullanıcılarımız Ne Diyor",
-      "subtitle": "Infery hakkında topluluk üyelerimizin düşüncelerini görün",
+      "subtitle": "Topluluk üyelerimizin Interfly hakkındaki düşüncelerini görün",
       "testimonial1": {
-        "content": "Infery, projelerimi sergileyen harika bir platform! İnanılmaz geri bildirimler alıyorum.",
+        "content": "Interfly, projelerimi sergilemek için mükemmel bir platform! Harika geri bildirimler alıyorum.",
         "author": "Ahmet Yılmaz",
         "role": "Frontend Developer"
       },
       "testimonial2": {
-        "content": "Bu platform sayesinde birçok ilham verici website keşfettim. Çok kaliteli!",
+        "content": "Bu platform sayesinde çok sayıda ilham verici website keşfettim. Çok kaliteli!",
         "author": "Elif Kaya",
         "role": "UI/UX Designer"
       },
       "testimonial3": {
-        "content": "Portfolyomu paylaştığımdan beri yeni projeler ve iş imkanları geliyor.",
+        "content": "Portfolyomu paylaştığımdan beri yeni projeler ve iş fırsatları geliyor.",
         "author": "Murat Demir",
         "role": "Full Stack Developer"
       }
     },
     "cta": {
-      "title": "Websitenizi Sergilemeye Hazır mısınız?",
-      "subtitle": "Bugün Infery topluluğuna katılın ve harika yaratımlarınızı paylaşın",
-      "joinNow": "Şimdi Katıl"
+      "title": "Websiteninizi Sergilemeye Hazır mısınız?",
+      "subtitle": "Bugün Interfly topluluğuna katılın ve harika yaratımlarınızı paylaşın",
+      "joinNow": "Şimdi Katıl",
+      "getStarted": "Başlayın",
+      "explore": "Keşfet"
     },
     "features": {
-      "title": "Neden Infery?",
+      "title": "Neden Interfly?",
       "subtitle": "Harika websiteleri paylaşmak ve keşfetmek için modern özellikler",
       "fast": {
         "title": "Hızlı ve Modern",
-        "description": "En hızlı ve modern teknolojilerle geliştirilmiş platform"
+        "description": "En hızlı ve en modern teknolojilerle geliştirilmiştir"
       },
       "analytics": {
-        "title": "Gerçek Zamanlı Analitik",
-        "description": "Websitelerinizdeki görüntülenme, beğeni ve etkileşimi takip edin"
+        "title": "Gerçek zamanlı analitik",
+        "description": "Websitelerinizdeki görüntüleme, beğeni ve etkileşimi takip edin"
       },
       "easy": {
-        "title": "Kolay Kullanım",
+        "title": "Kullanımı Kolay",
         "description": "Websitelerinizi kolayca paylaşın ve topluluktan geri bildirim alın"
       },
       "easySharing": {
@@ -129,18 +156,18 @@
       },
       "realTimeData": {
         "title": "Gerçek Zamanlı Analitik",
-        "description": "Websitelerinizdeki görüntülenme, beğeni ve etkileşimi takip edin"
+        "description": "Websitelerinizdeki görüntüleme, beğeni ve etkileşimi takip edin"
       },
       "modernTech": {
         "title": "Modern Teknoloji",
-        "description": "En iyi deneyim için en son web teknolojileri ile geliştirildi"
-          }
+        "description": "En iyi deneyim için en son web teknolojileri ile geliştirilmiştir"
+      }
+    }
   },
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Websitelerinizi yönetin ve istatistiklerinizi görüntüleyin"
-  }
-},
+  },
   "explore": {
     "title": "Websiteleri Keşfet",
     "subtitle": "Topluluk tarafından oluşturulan harika websiteleri keşfedin",
@@ -156,7 +183,13 @@
       "social": "Sosyal Medya",
       "educational": "Eğitim",
       "news": "Haber",
-      "other": "Diğer"
+      "other": "Diğer",
+      "personal": "Kişisel",
+      "business": "İş",
+      "education": "Eğitim",
+      "nonprofit": "Kar Amacı Gütmeyen",
+      "notSelected": "Kategori Seçilmedi",
+      "selectCategory": "Kategori Seç"
     },
     "sortBy": "Sırala",
     "newest": "En Yeni",
@@ -166,7 +199,27 @@
     "loadingFromFirestore": "Websiteler yükleniyor...",
     "refresh": "Yenile",
     "errorLoading": "Websiteler yüklenirken hata",
-    "tryAgain": "Tekrar Dene"
+    "tryAgain": "Tekrar Dene",
+    "websitesTitle": "Websiteler",
+    "websitesSubtitle": "Topluluk tarafından paylaşılan harika websiteleri keşfedin",
+    "monthlyMostViewed": "Bu Ay En Fazla Görüntülenen",
+    "sortRecent": "En Yeni",
+    "sortPopular": "En Popüler",
+    "sortViews": "En Çok Görüntülenen",
+    "adjustFilters": "Filtrelerinizi ayarlayın veya arama kriterlerinizi değiştirin",
+    "noWebsites": "Henüz website bulunamadı",
+    "unfollow": "Takibi Bırak",
+    "follow": "Takip Et",
+    "followers": "Takipçi",
+    "websites": "Website",
+    "joined": "Katıldı",
+    "member": "Üye",
+    "viewProfile": "Profili Görüntüle",
+    "noUsers": "Henüz kullanıcı bulunamadı",
+    "noUsersDesc": "Filtrelerinizi ayarlayın veya arama kriterlerinizi değiştirin",
+    "errors": {
+      "loadWebsites": "Websiteler yüklenirken hata oluştu"
+    }
   },
   "submit": {
     "title": "Yeni Website Ekle",
@@ -284,6 +337,7 @@
     "noUsersDescription": "İlk kullanıcıların katılmasını bekleyin",
     "notFound": "Kullanıcı bulunamadı",
     "notFoundDescription": "Farklı arama terimleri deneyin",
+    "topActiveUsers": "En Aktif Üyeler",
     "stats": {
       "websites": "Website",
       "views": "Görüntüleme",

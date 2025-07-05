@@ -389,6 +389,47 @@
 
 ---
 
+## 🔔 Bildirim Sistemi
+
+### Mevcut Özellikler
+- **Real-time Bildirimler**: Firestore listeners ile canlı bildirim akışı
+- **Kapsamlı Bildirim Türleri**:
+  - ❤️ Beğeni Bildirimleri
+  - 💬 Yorum Bildirimleri
+  - 👥 Takip Bildirimleri
+  - 🌐 Website Bildirimleri
+  - ⭐ Değerlendirme Bildirimleri
+  - 🔔 Sistem Bildirimleri
+
+### Teknik Özellikler
+- **Gerçek Zamanlı Güncellemeler**: Firestore real-time listeners
+- **Akıllı Filtreleme**: Kendi eylemleriniz için bildirim göndermez
+- **Bildirim Ayarları**: Kullanıcı tercihleri ile özelleştirilebilir
+- **Otomatik Tetikleyiciler**: Beğeni, yorum, takip, değerlendirme eylemleri
+- **Responsive UI**: Mobil ve masaüstü uyumlu tasarım
+
+### Bildirim Triggers
+- **Website Beğenme**: Sahibe bildirim
+- **Yorum Yazma**: Website sahibine bildirim
+- **Takip Etme**: Kullanıcıya bildirim
+- **Değerlendirme**: Website sahibine bildirim
+- **Sistem Mesajları**: Önemli güncellemeler
+
+### Bildirim Ayarları
+- **E-posta Bildirimleri**: Açık/kapalı seçeneği
+- **Push Bildirimleri**: Tarayıcı bildirim desteği
+- **Bildirim Türleri**: Her türü ayrı ayrı kontrol
+- **Kullanıcı Dostu UI**: Modal ile kolay yönetim
+
+### Uygulama Entegrasyonu
+- **Navbar Integration**: NotificationBell component
+- **Okunmamış Sayac**: Dynamic badge
+- **Dropdown Menu**: Bildirim listesi
+- **Ayarlar Modal**: Bildirim tercihleri
+- **Responsive Design**: Tüm cihazlarda uyumlu
+
+---
+
 ## 📝 Contributing
 
 Bu proje sürekli geliştirilmektedir. Yeni özellikler eklendiğinde:
@@ -403,7 +444,15 @@ Bu proje sürekli geliştirilmektedir. Yeni özellikler eklendiğinde:
 
 ## 📋 Quick Update Log
 
-### Latest Changes (v1.9.2):
+### Latest Changes (v1.9.3):
+- **🔔 Bildirim Sistemi Tamamlandı** - Tüm bildirim türleri ve ayarları entegre edildi
+- **🎯 Bildirim Triggers** - Beğeni, yorum, takip, değerlendirme bildirimleri
+- **⚙️ Bildirim Ayarları** - Kullanıcı tercihleri modal sistemi eklendi
+- **🌐 Dashboard Çoklu Dil** - Eksik İngilizce çeviriler eklendi
+- **📊 Notification Settings** - E-posta ve push bildirim tercihleri
+- **🔧 Real-time Listeners** - Canlı bildirim akışı ve sayaç güncellemeleri
+
+### Previous Changes (v1.9.2):
 - **🔥 Follow System** - Kullanıcı takip sistemi tamamen entegre edildi
 - **👥 Social Features** - Follow/unfollow, takipçi listeleri, istatistikler
 - **📊 Profile Integration** - Profil sayfalarında follow butonları ve stats
@@ -419,7 +468,7 @@ Bu proje sürekli geliştirilmektedir. Yeni özellikler eklendiğinde:
 
 ---
 
-**Son Güncelleme:** 2025-01-01  
-**Mevcut Sürüm:** v1.9.2  
+**Son Güncelleme:** 2025-01-02  
+**Mevcut Sürüm:** v1.9.3  
 **Geliştirici:** INFERY Team  
-**Platform Status:** Follow System & Activity Feed Complete ✅ 
+**Platform Status:** Notification System Complete ✅ 

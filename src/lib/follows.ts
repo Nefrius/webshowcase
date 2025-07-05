@@ -24,6 +24,8 @@ import {
   FollowActivity,
   FollowNotification
 } from '@/types/follow';
+import { createNotification } from './notifications';
+import { NotificationType } from '@/types/notification';
 
 // Follow işlemi - Kullanıcı takip etme
 export async function followUser(followRequest: FollowRequest): Promise<void> {
@@ -85,18 +87,26 @@ export async function followUser(followRequest: FollowRequest): Promise<void> {
       };
       transaction.set(activityRef, activityData);
 
-      // Bildirim oluştur
-      const notificationRef = doc(collection(db!, 'notifications'));
-      const notificationData: Omit<FollowNotification, 'id'> = {
-        type: 'new_follower',
-        fromUserId: followerId,
-        toUserId: followingId,
-        fromUserName: '', // Bu değer daha sonra user bilgisi ile doldurulacak
-        read: false,
-        createdAt: Timestamp.now()
-      };
-      transaction.set(notificationRef, notificationData);
+      // Yeni bildirim sistemi ile bildirim oluştur
+      // Bu transaction dışında yapılacak çünkü createNotification kendi transaction'ını kullanıyor
     });
+
+    // Transaction tamamlandıktan sonra bildirim oluştur
+    try {
+      await createNotification({
+        type: NotificationType.FOLLOW,
+        title: 'Yeni Takipçi',
+        message: 'Sizi takip etmeye başladı',
+        recipientId: followingId,
+        senderId: followerId,
+        metadata: {
+          followerId,
+          followingId
+        }
+      });
+    } catch (error) {
+      console.warn('Failed to create notification:', error);
+    }
 
     console.log('User followed successfully');
   } catch (error) {

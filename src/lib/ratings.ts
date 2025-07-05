@@ -22,6 +22,8 @@ import {
   UserRatingHistory,
   RatingStatsSummary 
 } from '@/types/rating';
+import { createNotification } from './notifications';
+import { NotificationType } from '@/types/notification';
 
 const db = getFirebaseDb();
 
@@ -88,6 +90,38 @@ export async function submitRating(
     });
     
     await batch.commit();
+    
+    // Bildirim oluştur (rating bildirimi)
+    try {
+      // Website sahibine bildirim gönder
+      const websiteDoc = await getDoc(doc(db, 'websites', submission.websiteId));
+      if (websiteDoc.exists()) {
+        const websiteData = websiteDoc.data();
+        const websiteOwnerId = websiteData.ownerId;
+        const websiteTitle = websiteData.title;
+        
+        // Kendi website'ine rating verme durumunda bildirim gönderme
+        if (websiteOwnerId !== userId && isNew) {
+          await createNotification({
+            type: NotificationType.RATING,
+            title: 'Yeni Değerlendirme',
+            message: `"${websiteTitle}" projeniz ${submission.rating} yıldız aldı`,
+            recipientId: websiteOwnerId,
+            senderId: userId,
+            senderName: userDisplayName,
+            websiteId: submission.websiteId,
+            websiteTitle: websiteTitle,
+            websiteImageUrl: websiteData.imageUrl,
+            metadata: {
+              rating: submission.rating,
+              review: submission.review || ''
+            }
+          });
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to create rating notification:', error);
+    }
     
     return { success: true, isNew, newStats };
   } catch (error) {

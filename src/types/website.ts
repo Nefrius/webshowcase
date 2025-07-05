@@ -11,6 +11,7 @@ export interface Website {
   ownerName: string;
   isPremium: boolean;
   featured: boolean;
+  isSponsored?: boolean;
   views: number;
   likes: number;
   commentCount?: number;

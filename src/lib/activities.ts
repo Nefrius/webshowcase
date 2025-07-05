@@ -13,15 +13,7 @@ import {
   deleteDoc,
   QueryConstraint
 } from 'firebase/firestore';
-import { db } from './firebase';
-
-// Helper function to get Firebase db with null check
-function getFirebaseDb() {
-  if (!db) {
-    throw new Error('Firebase not configured');
-  }
-  return db;
-}
+import { getFirebaseDb } from './firebase';
 import { 
   Activity, 
   CreateActivityData, 
