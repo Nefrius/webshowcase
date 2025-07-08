@@ -16,14 +16,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hasFirebaseConfig) {
     // Return default metadata if Firebase is not configured (e.g., during build)
     return {
-      title: 'Website Detayları | Infery',
+      title: 'Website Detayları | InferyHub',
       description: 'Website detaylarını görüntüleyin ve inceleyin.',
       keywords: ['web tasarım', 'website showcase', 'web development'],
       openGraph: {
-        title: 'Website Detayları | Infery',
+        title: 'Website Detayları | InferyHub',
         description: 'Website detaylarını görüntüleyin ve inceleyin.',
         type: 'website',
-        siteName: 'Infery',
+        siteName: 'InferyHub',
       },
     };
   }
@@ -37,13 +37,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     
     if (!websiteDoc.exists()) {
       return {
-        title: 'Website Bulunamadı | Infery',
+        title: 'Website Bulunamadı | InferyHub',
         description: 'Aradığınız website bulunamadı.',
       };
     }
 
     const website = websiteDoc.data();
-    const title = `${website.title} | Infery`;
+    const title = `${website.title} | InferyHub`;
     const description = website.description || `${website.title} hakkında detaylar ve incelemeleri.`;
 
     return {
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             alt: website.title,
           }
         ] : [],
-        siteName: 'Infery',
+        siteName: 'InferyHub',
       },
       twitter: {
         card: 'summary_large_image',
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: 'Website Detayları | Infery',
+      title: 'Website Detayları | InferyHub',
       description: 'Website detaylarını görüntüleyin.',
     };
   }

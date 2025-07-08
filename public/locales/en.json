@@ -559,7 +559,7 @@
     }
   },
   "about": {
-    "title": "About Infery",
+    "title": "About InferyHub",
     "subtitle": "A modern website showcase platform built with love from Turkey",
     "madeTurkey": "Made in Turkey, with love",
     "techStack": "Tech Stack",
@@ -590,7 +590,7 @@
     },
     "company": {
       "title": "Partner Company",
-      "subtitle": "Infery is being developed in partnership with Nefrius company",
+      "subtitle": "InferyHub is being developed in partnership with Nefrius company",
       "name": "Nefrius",
       "description": "A technology company that develops innovative solutions",
       "website": "Visit Website"

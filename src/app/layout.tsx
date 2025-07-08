@@ -9,8 +9,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Infery - Web Sitesi Vitrin Platformu",
-    template: "%s | Infery"
+    default: "InferyHub - Web Sitesi Vitrin Platformu",
+    template: "%s | InferyHub"
   },
   description: "Web sitelerinizi keşfedin, paylaşın ve beğenin. Türkiye'nin en kapsamlı web sitesi vitrin platformu.",
   keywords: [
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     "frontend",
     "UI/UX"
   ],
-  authors: [{ name: "Infery Team" }],
-  creator: "Infery",
-  publisher: "Infery",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://infery.com'),
+  authors: [{ name: "InferyHub Team" }],
+  creator: "InferyHub",
+  publisher: "InferyHub",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://inferyhub.com'),
   alternates: {
     canonical: '/',
   },
@@ -37,24 +37,24 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'tr_TR',
     url: '/',
-    title: 'Infery - Web Sitesi Vitrin Platformu',
+    title: 'InferyHub - Web Sitesi Vitrin Platformu',
     description: 'Web sitelerinizi keşfedin, paylaşın ve beğenin. Türkiye\'nin en kapsamlı web sitesi vitrin platformu.',
-    siteName: 'Infery',
+    siteName: 'InferyHub',
     images: [
       {
         url: '/logows.png',
         width: 1200,
         height: 630,
-        alt: 'Infery - Web Sitesi Vitrin Platformu',
+        alt: 'InferyHub - Web Sitesi Vitrin Platformu',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Infery - Web Sitesi Vitrin Platformu',
+    title: 'InferyHub - Web Sitesi Vitrin Platformu',
     description: 'Web sitelerinizi keşfedin, paylaşın ve beğenin.',
     images: ['/logows.png'],
-    creator: '@infery',
+    creator: '@inferyhub',
   },
   robots: {
     index: true,
@@ -89,7 +89,7 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/infery.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/logows.png" />
         <meta name="theme-color" content="#000000" />
         <meta name="msapplication-TileColor" content="#000000" />

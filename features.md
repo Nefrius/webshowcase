@@ -1,7 +1,7 @@
-# 🚀 INFERY - Modern Website Showcase Platform
+# 🚀 INFERYHUB - Modern Website Showcase Platform
 
 ## 📖 Proje Hakkında
-**INFERY**, Next.js 15 ve modern web teknolojileri ile geliştirilmiş, Türkiye'nin en kapsamlı website vitrin platformudur. Geliştiriciler ve tasarımcılar projelerini sergileyebilir, diğer çalışmaları keşfedebilir ve toplulukla etkileşim kurabilir.
+**INFERYHUB**, Next.js 15 ve modern web teknolojileri ile geliştirilmiş, Türkiye'nin en kapsamlı website vitrin platformudur. Geliştiriciler ve tasarımcılar projelerini sergileyebilir, diğer çalışmaları keşfedebilir ve toplulukla etkileşim kurabilir.
 
 ---
 
@@ -240,7 +240,45 @@
 
 ## 🔄 Release Notes
 
-### v1.9.2 - Current Release (2025-01-01) 🔥
+### v1.9.4 - Current Release (2025-01-02) 🎨
+**"Homepage Redesign - Grayscale Theme & Real Data Integration"**
+
+#### 🎯 Major Homepage Updates:
+- ✅ **Hydration Error Fix** - React hydration mismatch hatası tamamen çözüldü
+- ✅ **Real Data Integration** - Gerçek veritabanı değerleri ile sosyal kanıt güncellendi
+- ✅ **Grayscale Color Scheme** - Profesyonel siyah-beyaz-gri tema uygulandı
+- ✅ **Client-side Animation** - Floating dots animasyonu client-side'a taşındı
+- ✅ **Performance Optimization** - Sayfa yükleme hızı ve stabilite iyileştirildi
+- ✅ **Modern Professional Look** - Minimalist ve elegant tasarım yaklaşımı
+
+#### 🔧 Technical Improvements:
+- ✅ **Math.random() Fix** - Server-client mismatch sorunu çözüldü
+- ✅ **useEffect Integration** - Client-side dot generation implementasyonu
+- ✅ **TypeScript Safety** - FloatingDot interface ile tip güvenliği
+- ✅ **Real-time Data Sync** - stats.totalUsers gerçek veri entegrasyonu
+- ✅ **State Management** - Floating dots için local state yönetimi
+- ✅ **Error Prevention** - Hydration error'ları tamamen eliminate edildi
+
+#### 🎨 Visual Design Updates:
+- ✅ **Grayscale Theme** - Purple/blue/violet tonlarından gray/black/white'a geçiş
+- ✅ **Background Gradients** - Gri tonlarında professional gradient backgrounds
+- ✅ **Button Styling** - Siyah-beyaz buton tasarımları
+- ✅ **Hero Section** - Minimalist hero section with grayscale badges
+- ✅ **Stats Section** - Temiz istatistik kartları grayscale tema ile
+- ✅ **Features Section** - Tutarlı grayscale icon ve badge sistemleri
+
+### v1.9.3 - Previous Release (2025-01-02) 🔔
+**"Complete Notification System"**
+
+#### 🎯 Major Notification Features:
+- ✅ **Bildirim Sistemi Tamamlandı** - Tüm bildirim türleri ve ayarları entegre edildi
+- ✅ **Bildirim Triggers** - Beğeni, yorum, takip, değerlendirme bildirimleri
+- ✅ **Bildirim Ayarları** - Kullanıcı tercihleri modal sistemi eklendi
+- ✅ **Dashboard Çoklu Dil** - Eksik İngilizce çeviriler eklendi
+- ✅ **Notification Settings** - E-posta ve push bildirim tercihleri
+- ✅ **Real-time Listeners** - Canlı bildirim akışı ve sayaç güncellemeleri
+
+### v1.9.2 - Previous Release (2025-01-01) 🔥
 **"Follow System - Complete Social Features"**
 
 #### 🎯 Major Social Features:
@@ -470,5 +508,5 @@ Bu proje sürekli geliştirilmektedir. Yeni özellikler eklendiğinde:
 
 **Son Güncelleme:** 2025-01-02  
 **Mevcut Sürüm:** v1.9.3  
-**Geliştirici:** INFERY Team  
+**Geliştirici:** INFERYHUB Team  
 **Platform Status:** Notification System Complete ✅ 

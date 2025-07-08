@@ -70,7 +70,7 @@ export default function Navbar() {
               height={40}
               className="w-10 h-10 rounded-lg object-cover"
             />
-            <span className="text-xl font-bold">Infery</span>
+                          <span className="text-xl font-bold">InferyHub</span>
           </Link>
 
           {/* Desktop Navigation */}

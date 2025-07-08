@@ -299,6 +299,21 @@ export default function HomePage() {
               >
                 {t('home.hero.subtitle')}
               </motion.p>
+
+              {/* InferyHub Announcement */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.7 }}
+                className="mt-6"
+              >
+                <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-emerald-100 to-cyan-100 backdrop-blur-sm rounded-full border border-emerald-200 shadow-sm">
+                  <Sparkles className="w-4 h-4 text-emerald-600 mr-2" />
+                                     <span className="text-emerald-700 font-medium text-sm">
+                     🎉 Artık InferyHub.com&apos;dayız!
+                   </span>
+                </div>
+              </motion.div>
             </div>
 
             {/* Enhanced CTA Buttons - updated to grayscale */}
