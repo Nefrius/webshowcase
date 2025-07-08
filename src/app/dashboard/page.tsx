@@ -12,6 +12,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Website } from "@/types/website";
 import { getUserWebsites } from "@/lib/firestore";
+import PushNotificationPrompt from "@/components/ui/push-notification-prompt";
+import AppUpdatePrompt from "@/components/ui/app-update-prompt";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -309,6 +311,24 @@ export default function DashboardPage() {
                   </Button>
                 </CardContent>
               </Card>
+            </motion.div>
+
+            {/* Push Notification Prompt */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              <PushNotificationPrompt />
+            </motion.div>
+
+            {/* App Update Prompt */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <AppUpdatePrompt />
             </motion.div>
           </div>
         </div>

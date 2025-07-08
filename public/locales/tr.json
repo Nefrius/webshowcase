@@ -166,7 +166,26 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "subtitle": "Websitelerinizi yönetin ve istatistiklerinizi görüntüleyin"
+    "subtitle": "Websitelerinizi yönetin ve istatistiklerinizi görüntüleyin",
+    "welcome": "Hoş geldin, {name}",
+    "quickActions": "Hızlı İşlemler",
+    "addNewWebsite": "Yeni Website Ekle", 
+    "explore": "Keşfet",
+    "allMyWebsites": "Tüm Websitelerim",
+    "totalWebsites": "Toplam Website",
+    "totalViews": "Toplam Görüntüleme",
+    "totalLikes": "Toplam Beğeni",
+    "myWebsites": "Websitelerim",
+    "addNew": "Yeni Ekle",
+    "loading": "Yükleniyor...",
+    "noWebsites": "Henüz website yok",
+    "addFirstWebsite": "İlk website'nizi ekleyin",
+    "details": "Detaylar", 
+    "quickStats": "Hızlı İstatistikler",
+    "averageViews": "Ortalama Görüntüleme",
+    "mostLiked": "En Çok Beğenilen",
+    "mostViewed": "En Çok Görüntülenen",
+    "sponsoredContent": "Sponsorlu İçerik"
   },
   "explore": {
     "title": "Websiteleri Keşfet",
@@ -243,29 +262,6 @@
       "nonprofit": "Kar Amacı Gütmeyen",
       "other": "Diğer"
     }
-  },
-  "dashboard": {
-    "title": "Dashboard",
-    "subtitle": "Website performansınızı ve platform istatistiklerini takip edin",
-    "personalStats": "Kişisel İstatistikler",
-    "platformStats": "Platform İstatistikleri",
-    "totalWebsites": "Toplam Website",
-    "totalViews": "Toplam Görüntüleme",
-    "totalLikes": "Toplam Beğeni",
-    "totalFollowers": "Toplam Takipçi",
-    "topWebsites": "En İyi Performans Gösteren Websiteler",
-    "websiteCategories": "Website Kategorileri",
-    "popularCategories": "En Popüler Kategoriler",
-    "popularTechnologies": "En Popüler Teknolojiler",
-    "recentActivity": "Son Aktiviteler",
-    "noWebsites": "Henüz website eklenmemiş",
-    "noCategoryData": "Henüz kategori verisi yok",
-    "noActivity": "Henüz aktivite yok",
-    "thisMonth": "Bu ay",
-    "newWebsite": "Yeni Website",
-    "newUser": "Yeni Üye",
-    "like": "Beğeni",
-    "comment": "Yorum"
   },
   "myWebsites": {
     "title": "Websitelerim",
@@ -591,5 +587,42 @@
       "month": "ay önce",
       "months": "ay önce"
     }
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "subtitle": "Bildirim tercihlerinizi yönetin",
+    "enableNotifications": "Bildirimleri Aç",
+    "notificationSettings": "Bildirim Tercihleri",
+    "enableDescription": "InferyHub'dan önemli güncellemeler ve aktiviteler hakkında bildirim alın",
+    "settingsDescription": "Hangi bildirimler almak istediğinizi seçin",
+    "newWebsites": "Yeni Website Eklendiğinde",
+    "comments": "Yorumlar",
+    "ratings": "Değerlendirmeler", 
+    "follows": "Takip Bildirimleri",
+    "announcements": "Duyurular",
+    "enabled": "Açık",
+    "disabled": "Kapalı",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "back": "Geri",
+    "requesting": "İzin İsteniyor...",
+    "active": "Bildirimler Aktif",
+    "grantedMessage": "Bildirimler Aktif!",
+    "grantedDescription": "InferyHub bildirimlerini almaya başladınız.",
+    "savedMessage": "Tercihler Kaydedildi",
+    "savedDescription": "Bildirim tercihleriniz başarıyla güncellendi."
+  },
+  "appUpdate": {
+    "title": "Güncelleme Mevcut",
+    "description": "InferyHub'ın yeni versiyonu performans iyileştirmeleri ve yeni özellikler içeriyor.",
+    "updateNow": "Şimdi Güncelle",
+    "updateLater": "Daha Sonra",
+    "updating": "Güncelleniyor...",
+    "newFeatures": "Yeni Özellikler",
+    "improvements": "İyileştirmeler",
+    "updateCompleted": "Güncelleme Tamamlandı",
+    "reloadToApply": "Değişiklikler için sayfayı yenileyin",
+    "reload": "Yenile",
+    "version": "Versiyon"
   }
 } 

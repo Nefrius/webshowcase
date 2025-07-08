@@ -72,6 +72,13 @@ export const getFirebaseAnalytics = () => {
   return analytics;
 };
 
+export const getFirebaseApp = () => {
+  if (!app) {
+    throw new Error('Firebase App not initialized. Please check your environment variables.');
+  }
+  return app;
+};
+
 // Original exports for backward compatibility
 // Export Firebase services (will be null if not configured)
 export { auth, db, analytics };

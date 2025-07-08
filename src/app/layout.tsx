@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Analytics } from "@vercel/analytics/next";
 import Navbar from "@/components/layout/navbar";
 import AdDebug from "@/components/ui/ad-debug";
+import PWAInstallPrompt from "@/components/ui/pwa-install-prompt";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -91,9 +92,31 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/infery.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/logows.png" />
+        
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="InferyHub" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="InferyHub" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
+        {/* Theme Colors */}
         <meta name="theme-color" content="#000000" />
         <meta name="msapplication-TileColor" content="#000000" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        
+        {/* Viewport */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
+        
+        {/* Apple Splash Screens */}
+        <link rel="apple-touch-startup-image" href="/logows.png" />
+        
+        {/* Disable automatic detection */}
+        <meta name="format-detection" content="telephone=no" />
         
       </head>
       <body
@@ -107,6 +130,7 @@ export default function RootLayout({
               {children}
             </main>
             <Toaster position="top-right" />
+            <PWAInstallPrompt />
           </AuthProvider>
         </LanguageProvider>
         
