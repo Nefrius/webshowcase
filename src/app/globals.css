@@ -119,4 +119,25 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Cursor pointer for interactive elements */
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .cursor-pointer {
+    @apply cursor-pointer;
+  }
+  
+  /* Cursor pointer for links */
+  a {
+    @apply cursor-pointer;
+  }
+  
+  /* Cursor pointer for clickable cards */
+  .card-clickable,
+  [data-clickable="true"] {
+    @apply cursor-pointer;
+  }
 }

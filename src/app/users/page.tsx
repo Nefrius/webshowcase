@@ -166,6 +166,38 @@ export default function UsersPage() {
     router.push(`/profile/${userId}`);
   };
 
+  // Helper function to safely format date
+  const formatCreatedDate = (timestamp: unknown): string => {
+    if (!timestamp) return t('users.profile.dateUnknown');
+    
+    try {
+      let date: Date;
+      
+      // Handle Firestore timestamp
+      if (typeof timestamp === 'object' && timestamp !== null && 'seconds' in timestamp) {
+        const firestoreTimestamp = timestamp as { seconds: number };
+        date = new Date(firestoreTimestamp.seconds * 1000);
+      } else if (typeof timestamp === 'object' && timestamp !== null && 'toDate' in timestamp) {
+        const firestoreTimestamp = timestamp as { toDate: () => Date };
+        date = firestoreTimestamp.toDate();
+      } else if (timestamp instanceof Date) {
+        date = timestamp;
+      } else {
+        date = new Date(timestamp as string | number);
+      }
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        return t('users.profile.dateUnknown');
+      }
+      
+      return date.toLocaleDateString('tr-TR');
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return t('users.profile.dateUnknown');
+    }
+  };
+
   const getRoleIcon = (role: string) => {
     switch (role) {
       case 'admin':
@@ -255,7 +287,7 @@ export default function UsersPage() {
                 </h2>
               </motion.div>
               <p className="text-gray-300 text-sm max-w-2xl mx-auto">
-                En aktif topluluk üyelerimizi keşfedin ve projelerini inceleyin
+                {t('users.topActiveDesc')}
               </p>
             </div>
 
@@ -501,7 +533,7 @@ export default function UsersPage() {
 
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Calendar className="h-3 w-3" />
-                        <span>{t('users.profile.joined')}: {user.createdAt ? new Date(user.createdAt).toLocaleDateString('tr-TR') : 'Unknown'}</span>
+                        <span>{t('users.profile.joined')}: {formatCreatedDate(user.createdAt)}</span>
                       </div>
                     </div>
 

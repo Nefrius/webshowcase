@@ -107,7 +107,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
             </span>
           </DialogTitle>
           <DialogDescription>
-            Kullanıcı bilgilerini düzenleyin, yasaklama işlemlerini yönetin ve rozet atayın.
+            {t('admin.userManagementDesc')}
           </DialogDescription>
         </DialogHeader>
 
@@ -152,7 +152,7 @@ export const UserManagementModal: React.FC<UserManagementModalProps> = ({
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Özel Mesaj
+              {t('admin.privateMessage')}
             </button>
           </div>
 

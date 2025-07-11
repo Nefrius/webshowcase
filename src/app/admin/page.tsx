@@ -28,7 +28,8 @@ import {
   initializeDefaultBadges,
   deleteBadge,
   updateBadge,
-  deleteAnnouncement
+  deleteAnnouncement,
+  updateUserData
 } from '@/lib/admin';
 import { UserManagementModal } from '@/components/ui/admin/UserManagementModal';
 import { AdminUserData, UserBadge, SystemAnnouncement, CreateBadgeData } from '@/types/user';
@@ -276,7 +277,7 @@ export default function AdminPage() {
               {t('admin.accessDenied')}
             </CardTitle>
             <CardDescription>
-              Bu sayfaya erişim yetkiniz bulunmamaktadır.
+              {t('admin.accessDeniedDesc')}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -306,7 +307,7 @@ export default function AdminPage() {
                 {t('admin.title')}
               </h1>
               <p className="text-muted-foreground mt-2">
-                {t('admin.welcome')}, {user?.displayName || user?.email}
+                {t('admin.subtitle')}
               </p>
             </div>
             <div className="flex items-center space-x-2 mt-4 sm:mt-0">
@@ -455,7 +456,7 @@ export default function AdminPage() {
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder={t('admin.search')}
+                    placeholder={t('admin.searchUsers')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -497,10 +498,10 @@ export default function AdminPage() {
                                   <p className="font-medium">{userData.displayName || userData.email}</p>
                                   <p className="text-sm text-muted-foreground">{userData.email}</p>
                 </div>
-                  </div>
+                              </div>
                             </TableCell>
                             <TableCell>
-                              <BadgeComponent variant={userData.role === 'admin' ? 'destructive' : 'secondary'}>
+                              <BadgeComponent variant={userData.role === 'admin' ? 'destructive' : 'default'}>
                                 {userData.role}
                               </BadgeComponent>
                             </TableCell>
@@ -508,19 +509,13 @@ export default function AdminPage() {
                               {userData.badge ? (
                                 <UserBadgeComponent badge={userData.badge} size="sm" />
                               ) : (
-                                <span className="text-sm text-muted-foreground">No badge</span>
+                                '-'
                               )}
                             </TableCell>
                             <TableCell>
-                              {userData.isBlocked ? (
-                                <BadgeComponent variant="destructive">
-                                  {t('admin.banned')}
-                                </BadgeComponent>
-                              ) : (
-                                <BadgeComponent variant="default">
-                                  {t('admin.active')}
-                                </BadgeComponent>
-                              )}
+                              <BadgeComponent variant={userData.isBlocked ? 'destructive' : 'default'}>
+                                {userData.isBlocked ? t('admin.banned') : t('admin.active')}
+                              </BadgeComponent>
                             </TableCell>
                             <TableCell>
                               {userData.createdAt.toLocaleDateString()}
@@ -543,18 +538,18 @@ export default function AdminPage() {
                                     size="sm"
                                     onClick={() => handleUnbanUser(userData.uid)}
                                   >
-                                    <UserCheck className="h-4 w-4" />
+                                    <UserCheck className="h-4 w-4 text-green-500" />
                                   </Button>
                                 ) : (
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleBanUser(userData.uid, 'Admin action')}
+                                    onClick={() => handleBanUser(userData.uid, 'Kullanıcı kuralları ihlali')}
                                   >
-                                    <Ban className="h-4 w-4" />
+                                    <Ban className="h-4 w-4 text-red-500" />
                                   </Button>
                                 )}
-                </div>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -568,12 +563,12 @@ export default function AdminPage() {
             <TabsContent value="badges" className="space-y-6">
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="text-lg font-semibold">{t('admin.badges')}</h3>
+                  <h3 className="text-lg font-semibold">{t('admin.badgeManagement')}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {t('admin.badgeManagement')}
+                    {t('admin.badgeManagementDesc')}
                   </p>
                 </div>
-                <Button
+                <Button 
                   onClick={() => {
                     setSelectedBadge(null);
                     setIsBadgeModalOpen(true);
@@ -585,49 +580,33 @@ export default function AdminPage() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {badges.map((badge) => (
-                  <Card key={badge.id}>
-                    <CardHeader className="pb-3">
-                      <div className="flex items-center justify-between">
-                        <UserBadgeComponent badge={badge} size="md" />
-                        <div className="flex items-center gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setSelectedBadge(badge);
-                              setIsBadgeModalOpen(true);
-                            }}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          {!badge.isDefault && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDeleteBadge(badge.id)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          )}
-                        </div>
+                  <Card key={badge.id} className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <UserBadgeComponent badge={badge} size="lg" />
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedBadge(badge);
+                            setIsBadgeModalOpen(true);
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteBadge(badge.id)}
+                        >
+                          <Trash2 className="h-4 w-4 text-red-500" />
+                        </Button>
                       </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {badge.description}
-                      </p>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>Priority: {badge.priority}</span>
-                        {badge.isDefault && (
-                          <BadgeComponent variant="outline" className="text-xs">
-                            Default
-                          </BadgeComponent>
-                        )}
-              </div>
-            </CardContent>
-          </Card>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{badge.description}</p>
+                  </Card>
                 ))}
               </div>
             </TabsContent>
@@ -635,20 +614,19 @@ export default function AdminPage() {
         </div>
       </div>
 
-      {/* User Management Modal */}
+      {/* Modals */}
       <UserManagementModal
         user={selectedUser}
         isOpen={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
-        onSave={async () => {
-          // Save user data if needed
+        onSave={async (userData) => {
+          if (selectedUser) {
+            await updateUserData(selectedUser.uid, userData, user!.uid);
+            await loadUsers();
+          }
         }}
-        onBan={async (userId, reason) => {
-          await handleBanUser(userId, reason);
-        }}
-        onUnban={async (userId) => {
-          await handleUnbanUser(userId);
-        }}
+        onBan={handleBanUser}
+        onUnban={handleUnbanUser}
         badges={badges}
         onAssignBadge={handleAssignBadge}
         onRemoveBadge={handleRemoveBadge}
@@ -656,12 +634,11 @@ export default function AdminPage() {
         isLoading={loading}
       />
 
-      {/* Badge Management Modal */}
       <BadgeManagementModal
         badge={selectedBadge}
         isOpen={isBadgeModalOpen}
         onClose={() => setIsBadgeModalOpen(false)}
-        onSave={(badgeId?: string, badgeData?: Partial<CreateBadgeData>) => {
+        onSave={(badgeId, badgeData) => {
           if (badgeId && badgeData) {
             handleUpdateBadge(badgeId, badgeData);
           } else if (badgeData) {
@@ -670,7 +647,6 @@ export default function AdminPage() {
         }}
       />
 
-      {/* Announcement Modal */}
       <AnnouncementModal
         isOpen={isAnnouncementModalOpen}
         onClose={() => setIsAnnouncementModalOpen(false)}
